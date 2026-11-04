@@ -11,3 +11,11 @@ Customer-facing documents for V5 Event Management's Indian wedding planning.
 
 Each PDF is rendered from the HTML file next to it with headless Chromium (Playwright) at A4 size.
 Placeholders in square brackets, such as `[COUPLE NAMES]`, still need filling in before the documents go to a client.
+
+## Website
+
+The public website lives in `site/` and is deployed by Netlify (`netlify.toml` publishes only that folder):
+
+- `site/index.html`: home page
+- `site/intake/`: customer intake form; submissions go to Netlify Forms (form name `intake`)
+- `site/thanks/`: page shown after a customer submits

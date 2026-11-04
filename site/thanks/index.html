@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Thank you · V5 Event Management</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Hind:wght@400;500;600&family=Martel+Sans:wght@700;800&display=swap">
+<style>
+:root { --paper: #fbfaf7; --ink: #2a1418; --muted: #6a5558; --kumkum: #9b1c2c; --haldi: #e3a514; --leaf: #2f6b3a; }
+@media (prefers-color-scheme: dark) { :root { --paper: #170d0f; --ink: #f4e9e4; --muted: #b8a39f; --kumkum: #e8707e; color-scheme: dark; } }
+body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: var(--paper); color: var(--ink); font: 17px/1.6 "Hind", "Segoe UI", system-ui, sans-serif; padding: 24px max(20px, env(safe-area-inset-left, 0px)); box-sizing: border-box; }
+main { max-width: 34em; display: grid; gap: 14px; }
+.band { height: 10px; background: repeating-linear-gradient(90deg, var(--haldi) 0 14px, transparent 14px 18px, var(--kumkum) 18px 26px, transparent 26px 30px, var(--leaf) 30px 36px, transparent 36px 40px); border-radius: 2px; }
+.eyebrow { font: 800 12px/1 "Martel Sans", sans-serif; letter-spacing: .16em; text-transform: uppercase; color: var(--kumkum); }
+h1 { font: 400 clamp(36px, 7vw, 54px)/1.05 "Rozha One", Georgia, serif; margin: 0; }
+p { margin: 0; color: var(--muted); }
+a.btn { justify-self: start; margin-top: 8px; font: 700 15px/1 "Martel Sans", sans-serif; padding: 14px 20px; border-radius: 10px; background: var(--kumkum); color: #fbfaf7; text-decoration: none; }
+a:focus-visible { outline: 2px solid var(--haldi); outline-offset: 3px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">V5 Event Management</div>
+  <h1>Thank you. We've got your details.</h1>
+  <p>We'll go through your intake form and get back to you with a quote for your celebrations.</p>
+  <div class="band" aria-hidden="true"></div>
+  <a class="btn" href="/">Back to the home page</a>
+</main>
+</body>
+</html>
