@@ -72,6 +72,17 @@
 .chip i { width: 8px; height: 8px; border-radius: 50%; }
 .up-empty { color: #d9c9c4; font-size: 15px; }
 
+.beyond { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+.bcard { border: 1px solid var(--line); border-radius: 22px; overflow: hidden; display: grid; grid-template-rows: auto 1fr; }
+.bcard .ph { aspect-ratio: 4 / 3; border-radius: 0; }
+.btext { padding: 24px 26px 28px; display: grid; gap: 10px; align-content: start; }
+.btext h3 { margin: 0; font: 600 32px/1.05 var(--display); }
+.btext p { margin: 0; color: var(--muted); }
+.ticks { list-style: none; margin: 4px 0; padding: 0; display: grid; gap: 6px; font: 600 14.5px/1.35 var(--label); }
+.ticks li { display: flex; gap: 10px; align-items: baseline; }
+.ticks li::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--haldi); flex: none; transform: translateY(-1px); }
+.btext .done { font: 600 13.5px/1.4 var(--label); color: var(--leaf); background: #e8f3ea; border-radius: 10px; padding: 8px 12px; }
+.btext .btn { justify-self: start; margin-top: 6px; }
 .weddings { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
 .ph.has-img::before { display: none; }
 .ph.illus .mark { position: absolute; top: 10px; left: 10px; margin: 0; font: 700 11px/1 var(--label); background: rgba(255,255,255,.9); color: var(--kumkum); padding: 6px 9px; border-radius: 999px; letter-spacing: .02em; }
@@ -149,7 +160,7 @@
   .planner form { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .planner .btn { grid-column: 1 / -1; }
   .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .tools, .weddings { grid-template-columns: minmax(0, 1fr); }
+  .tools, .weddings, .beyond { grid-template-columns: minmax(0, 1fr); }
   .quotes { grid-auto-columns: 82%; }
   .weddings .wed:nth-child(n+2) .ph { aspect-ratio: 16 / 10; }
   .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -169,7 +180,7 @@
 <body>
 
 <div class="utility"><div class="wrap">
-  <span>Indian weddings across the Seattle area</span>
+  <span>Weddings, birthdays and corporate events across the Seattle area</span>
   <span>Call or WhatsApp <a href="tel:+14255031212">(425) 503-1212</a></span>
 </div></div>
 
@@ -181,7 +192,7 @@
       <a href="#services">Services</a>
       <a href="#ceremonies">Ceremonies</a>
       <a href="/calendar/">Calendar</a>
-      <a href="#weddings">Our weddings</a>
+      <a href="#weddings">Our work</a>
       <a href="#about">About</a>
       <a class="btn primary small" href="/intake/">Request a quote</a>
     </nav>
@@ -219,6 +230,8 @@
           <option value="mehandi">Mehandi &amp; Bangles</option>
           <option value="haldi">Haldi</option>
           <option value="vratham">Vratham</option>
+          <option value="birthday">Birthday party</option>
+          <option value="corporate">Corporate event</option>
         </select>
       </label>
       <label><span>Guests</span><input type="number" name="guests" id="pl-guests" min="1" inputmode="numeric" placeholder="e.g. 250"></label>
@@ -274,6 +287,35 @@
       <div class="cer"><div class="ph has-img"><img src="/images/mehandi-bangles.jpg" alt="Hennaed hands with bangles holding a betel leaf" loading="lazy" decoding="async"></div><div class="n">04</div><h3>Mehandi &amp; Bangles</h3><p>Henna and the gaajulu ceremony, with seating and a photo backdrop.</p></div>
       <div class="cer"><div class="ph has-img"><img src="/images/bride-mandap.jpg" alt="Bride seated at the mandap" loading="lazy" decoding="async"></div><div class="n">05</div><h3>Pelli &amp; Reception</h3><p>The muhurtham at the mandapam, then the reception for everyone.</p></div>
       <div class="cer"><div class="ph has-img illus"><img src="/images/illustrations/vratham.svg" alt="Illustration: kalash with mango leaves between two diyas" loading="lazy"><span class="mark">Illustration</span></div><div class="n">06</div><h3>Vratham</h3><p>Satyanarayana Swamy Vratham, with the priest and a veg meal.</p></div>
+    </div>
+  </section>
+
+  <section class="s wrap" id="beyond">
+    <div class="s-head"><div><div class="eyebrow">Beyond weddings</div><h2>Birthdays and corporate events</h2>
+      <p>The same team, care and vendors, for every kind of celebration.</p></div>
+      <a class="more" href="/intake/?events=birthday">Plan a birthday →</a></div>
+    <div class="beyond">
+      <article class="bcard">
+        <div class="ph has-img illus"><img src="/images/illustrations/birthday.svg" alt="Illustration: kids' birthday party with balloons, a cake and a play area" loading="lazy"><span class="mark">Illustration · photo coming soon</span></div>
+        <div class="btext">
+          <div class="eyebrow">Birthday parties</div>
+          <h3>Kids' birthdays they'll remember</h3>
+          <p>Themed decor, a kids' play area, a cake table and food for every guest, all set up and cleared away by our team.</p>
+          <ul class="ticks"><li>Themed decor and balloon work</li><li>Kids' play area</li><li>Cake table and food for guests</li></ul>
+          <p class="done">Delivered: two kids' birthday parties in June and September 2026</p>
+          <a class="btn primary small" href="/intake/?events=birthday">Plan a birthday</a>
+        </div>
+      </article>
+      <article class="bcard">
+        <div class="ph has-img illus"><img src="/images/illustrations/corporate.svg" alt="Illustration: corporate event stage with a screen and podium" loading="lazy"><span class="mark">Illustration</span></div>
+        <div class="btext">
+          <div class="eyebrow">Corporate events</div>
+          <h3>Team celebrations, done properly</h3>
+          <p>Diwali and festival celebrations at work, team parties, launches and offsites, with catering, decor, stage and on-the-day coordination.</p>
+          <ul class="ticks"><li>Catering for teams of any size</li><li>Stage, lighting and decor</li><li>One coordinator from setup to close</li></ul>
+          <a class="btn primary small" href="/intake/?events=corporate">Plan a corporate event</a>
+        </div>
+      </article>
     </div>
   </section>
 
@@ -387,7 +429,7 @@
       <p style="margin:0;max-width:22em">Indian and Telugu wedding planning across the Seattle area.</p>
     </div>
     <div><h3>Services</h3><ul><li><a href="#services">Food &amp; catering</a></li><li><a href="#services">Decor</a></li><li><a href="#services">Photography</a></li><li><a href="#services">Garlands &amp; rentals</a></li><li><a href="#services">Guest accommodation</a></li></ul></div>
-    <div><h3>Plan</h3><ul><li><a href="/intake/">Request a quote</a></li><li><a href="/calendar/">Our calendar</a></li><li><a href="#ceremonies">Ceremonies</a></li><li><a href="/terms/">Service terms</a></li><li><a href="#about">About us</a></li></ul></div>
+    <div><h3>Plan</h3><ul><li><a href="/intake/">Request a quote</a></li><li><a href="/calendar/">Our calendar</a></li><li><a href="#ceremonies">Ceremonies</a></li><li><a href="#beyond">Birthdays &amp; corporate</a></li><li><a href="/terms/">Service terms</a></li><li><a href="#about">About us</a></li></ul></div>
     <div><h3>Contact</h3><ul><li><a href="tel:+14255031212">(425) 503-1212</a></li><li>Call or WhatsApp</li><li>Seattle area, WA</li></ul></div>
     <div class="legal"><span>© <span data-year>2026</span> V5 Events</span><span>Every ceremony, beautifully planned.</span></div>
   </div>

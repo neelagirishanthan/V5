@@ -153,7 +153,7 @@ input:focus-visible, textarea:focus-visible, select:focus-visible, button:focus-
   <header class="hero">
     <a href="/" aria-label="V5 Events home"><img src="/assets/logo.svg" alt="V5 Events" width="430" height="120" style="height:56px;width:auto;margin-bottom:8px"></a>
     <div class="eyebrow">Customer intake</div>
-    <h1>Tell us about your wedding<span class="dot">.</span></h1>
+    <h1>Tell us about your celebration<span class="dot">.</span></h1>
     <p class="lede">Pick the ceremonies you are celebrating and answer a few questions for each one. We use this to plan decor, food, bar, music, the priest and photography. You can come back and change your answers any time.</p>
     <div class="border-band" aria-hidden="true"></div>
   </header>
@@ -162,9 +162,9 @@ input:focus-visible, textarea:focus-visible, select:focus-visible, button:focus-
     <section class="block">
       <h2>Your details</h2>
       <div class="grid">
-        <label class="field"><span>Bride's name</span><input type="text" id="c-bride" name="couple.bride" autocomplete="off"></label>
-        <label class="field"><span>Groom's name</span><input type="text" id="c-groom" name="couple.groom" autocomplete="off"></label>
-        <label class="field"><span>Contact person</span><input type="text" id="c-contact" name="couple.contact" autocomplete="name"></label>
+        <label class="field"><span>Bride's name <em class="qlabel"><em>(weddings)</em></em></span><input type="text" id="c-bride" name="couple.bride" autocomplete="off"></label>
+        <label class="field"><span>Groom's name <em class="qlabel"><em>(weddings)</em></em></span><input type="text" id="c-groom" name="couple.groom" autocomplete="off"></label>
+        <label class="field"><span>Contact person / host</span><input type="text" id="c-contact" name="couple.contact" autocomplete="name"></label>
         <label class="field"><span>Phone / WhatsApp</span><input type="tel" id="c-phone" name="couple.phone" autocomplete="tel"></label>
         <label class="field"><span>Email</span><input type="email" id="c-email" name="couple.email" autocomplete="email"></label>
         <label class="field"><span>City / venue</span><input type="text" id="c-venue" name="couple.venue"></label>
@@ -227,9 +227,11 @@ const EVENTS = [
   { id: "sangeeth", name: "Sangeeth", note: "Music and dance night", priest: false, dj: true },
   { id: "mehandi", name: "Mehandi & Bangles", note: "Henna and gaajulu ceremony", priest: false, dj: true },
   { id: "pelli", name: "Pelli & Reception", note: "Wedding muhurtham and reception", priest: true, dj: true },
-  { id: "vratham", name: "Vratham", note: "Satyanarayana Swamy Vratham", priest: true, dj: false }
+  { id: "vratham", name: "Vratham", note: "Satyanarayana Swamy Vratham", priest: true, dj: false },
+  { id: "birthday", name: "Birthday party", note: "Kids' and family birthdays: themed decor, play area, cake table", priest: false, dj: true },
+  { id: "corporate", name: "Corporate event", note: "Team celebrations, festivals at work, launches and offsites", priest: false, dj: true }
 ];
-const DECOR = ["Stage / mandapam", "Entrance arch", "Floral decor", "Garlands", "Lighting", "Seating & tables", "Photo booth", "Backdrop / theme", "Rangoli"];
+const DECOR = ["Stage / mandapam", "Entrance arch", "Floral decor", "Garlands", "Lighting", "Seating & tables", "Photo booth", "Backdrop / theme", "Rangoli", "Balloon decor", "Kids' play area", "Cake table"];
 const COUNTERS = ["Dosa", "Chaat & pani puri", "Jalebi", "Pasta", "Tandoor / BBQ", "Biryani", "Ice cream & paan", "Juice / mocktails"];
 const BAR = ["Full bar", "Beer & wine", "Mocktails only"];
 const PHOTO = ["Photos", "Video", "Candid", "Drone", "Same-day edit"];
@@ -346,8 +348,8 @@ function summary(o) {
   const c = o.couple || {};
   const evs = chosen(o);
   const L = [];
-  L.push(`V5 EVENT MANAGEMENT · WEDDING INTAKE`);
-  L.push(`Couple: ${c.bride || "?"} & ${c.groom || "?"}`);
+  L.push(`V5 EVENTS · CELEBRATION INTAKE`);
+  if (c.bride || c.groom) L.push(`Couple: ${c.bride || "?"} & ${c.groom || "?"}`);
   if (c.contact) L.push(`Contact: ${c.contact}`);
   if (c.phone || c.email) L.push(`Phone / email: ${[c.phone, c.email].filter(Boolean).join(" · ")}`);
   if (c.venue) L.push(`City / venue: ${c.venue}`);
@@ -424,7 +426,7 @@ form.addEventListener("submit", async (ev) => {
   ev.preventDefault();
   const o = refresh();
   const c = o.couple;
-  if (!c.bride && !c.groom) { setStatus("Add the bride's or groom's name so we know whose wedding this is.", "err"); $("c-bride").focus(); return; }
+  if (!c.bride && !c.groom && !c.contact) { setStatus("Add a contact name (or the bride's and groom's names) so we know who the celebration is for.", "err"); $("c-contact").focus(); return; }
   if (!c.phone && !c.email) { setStatus("Add a phone number or email so we can reach you.", "err"); $("c-phone").focus(); return; }
   const evs = chosen(o);
   if (!evs.length) { setStatus("Switch on at least one event.", "err"); return; }

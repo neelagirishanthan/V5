@@ -21,7 +21,9 @@ window.V5 = {
     "Mehandi & Bangles": "#2f6b3a",
     "Pelli & Reception": "#9b1c2c",
     "Pelli (Wedding)": "#9b1c2c",
-    "Vratham": "#1f5f8b"
+    "Vratham": "#1f5f8b",
+    "Birthday party": "#d6457a",
+    "Corporate event": "#3c4a5a"
   },
   color(name) { return this.CEREMONIES[name] || "#6a5558"; },
   async loadCalendar() {

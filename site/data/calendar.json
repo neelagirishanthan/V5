@@ -1,7 +1,22 @@
 {
-  "_how_to_edit": "Add one entry per celebration. Use 'days' with exact dates when they are confirmed; until then set 'month' (YYYY-MM) and leave 'days' empty. Ceremony names must match the site's list: Haldi, Pelli Koduku & Kooturu, Sangeeth, Mehandi & Bangles, Pelli & Reception, Pelli (Wedding), Vratham. Never put client names here unless the client has agreed.",
+  "_how_to_edit": "Add one entry per celebration. Use 'days' with exact dates when they are confirmed; until then set 'month' (YYYY-MM) and leave 'days' empty. Ceremony names must match the site's list: Haldi, Pelli Koduku & Kooturu, Sangeeth, Mehandi & Bangles, Pelli & Reception, Pelli (Wedding), Vratham, Birthday party, Corporate event. Never put client names here unless the client has agreed.",
   "updated": "2026-11-04",
   "celebrations": [
+    {
+      "id": "jun-2026-birthday",
+      "title": "Kids' birthday party",
+      "month": "2026-06",
+      "area": "",
+      "status": "completed",
+      "ceremonies": [
+        "Birthday party"
+      ],
+      "highlights": [
+        "Themed decor",
+        "Kids' play area"
+      ],
+      "days": []
+    },
     {
       "id": "aug-2026-wedding",
       "title": "Indian wedding",
@@ -27,6 +42,21 @@
           "ceremony": "Pelli (Wedding)"
         }
       ]
+    },
+    {
+      "id": "sep-2026-birthday",
+      "title": "Kids' birthday party",
+      "month": "2026-09",
+      "area": "",
+      "status": "completed",
+      "ceremonies": [
+        "Birthday party"
+      ],
+      "highlights": [
+        "Themed decor",
+        "Kids' play area"
+      ],
+      "days": []
     },
     {
       "id": "feb-2027-wedding",
