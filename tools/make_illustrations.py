@@ -160,9 +160,43 @@ def avatar(i):
          f'<path d="M36 200c0-44 28-72 64-72s64 28 64 72Z" fill="{fgs[i]}"/>', f'<path d="M80 150l20 18 20-18" fill="none" stroke="{HALDI}" stroke-width="5" stroke-linejoin="round"/>']
     return svg(200, 200, "".join(b), "Illustration of a team member")
 
+def birthday():
+    balloons = "".join(f'<path d="M{x} {y+44}q-6 40 6 80" fill="none" stroke="{INK}" stroke-opacity=".35" stroke-width="1.5"/><ellipse cx="{x}" cy="{y}" rx="28" ry="34" fill="{c}"/><path d="M{x-4} {y+33}l4 9 4-9z" fill="{c}"/><ellipse cx="{x-9}" cy="{y-12}" rx="6" ry="9" fill="#fff" opacity=".35"/>' for x, y, c in ((70, 90, "#d6457a"), (128, 64, HALDI), (330, 84, "#3d8a4b"), (276, 60, "#7a3d8f")))
+    confetti = "".join(f'<rect x="{x}" y="{y}" width="7" height="4" fill="{c}" transform="rotate({r} {x} {y})"/>' for x, y, c, r in ((180, 40, MARIGOLD, 20), (220, 90, "#d6457a", -30), (40, 170, "#7a3d8f", 45), (360, 160, HALDI, 10), (200, 140, LEAF, 60), (250, 30, "#d6457a", 15)))
+    b = [f'<defs>{grad("bbg", "#fdeef4", CREAM)}</defs>', '<rect width="400" height="300" fill="url(#bbg)"/>',
+         f'<path d="M0 24l25 22 25-22 25 22 25-22 25 22 25-22 25 22 25-22 25 22 25-22 25 22 25-22 25 22 25-22 25 22 25-22" fill="none" stroke="{MAROON}" stroke-opacity=".25"/>',
+         *[f'<path d="M{x} 24l12 0l-6 14z" fill="{c}"/>' for x, c in ((20, HALDI), (70, "#d6457a"), (120, LEAF), (170, MARIGOLD), (220, "#7a3d8f"), (270, HALDI), (320, "#d6457a"), (370, LEAF))],
+         confetti, balloons,
+         # play area: slide and blocks
+         f'<rect x="0" y="248" width="400" height="52" fill="#f3dccf"/>',
+         f'<path d="M24 248v-62h34v62" fill="none" stroke="{MARIGOLD}" stroke-width="6"/><path d="M58 190c30 6 50 30 64 58" fill="none" stroke="#7a3d8f" stroke-width="10" stroke-linecap="round"/><path d="M24 206h34M24 226h34" stroke="{MARIGOLD}" stroke-width="4"/>',
+         *[f'<rect x="{x}" y="{y}" width="24" height="24" rx="3" fill="{c}"/>' for x, y, c in ((306, 224, HALDI), (332, 224, "#3d8a4b"), (319, 200, "#d6457a"))],
+         # cake
+         f'<rect x="164" y="212" width="80" height="36" rx="6" fill="{BLUSH}"/><rect x="164" y="212" width="80" height="10" rx="5" fill="#d6457a"/>',
+         f'<rect x="174" y="184" width="60" height="30" rx="6" fill="#fff7ef"/><rect x="174" y="184" width="60" height="8" rx="4" fill="{HALDI}"/>',
+         *[f'<rect x="{x}" y="166" width="5" height="18" fill="{c}"/><path d="M{x+2.5} 156c5 5 4 10 0 11c-4-1-5-6 0-11Z" fill="{MARIGOLD}"/>' for x, c in ((188, "#7a3d8f"), (202, "#3d8a4b"), (216, "#d6457a"))],
+         f'<ellipse cx="204" cy="250" rx="54" ry="6" fill="{MAROON}" opacity=".15"/>']
+    return svg(400, 300, "".join(b), "Illustration of a kids' birthday party with balloons, a cake and a play area")
+
+def corporate():
+    b = [f'<defs>{grad("cbg", "#1f2a3a", "#3c4a5a")}</defs>', '<rect width="400" height="300" fill="url(#cbg)"/>',
+         lights(400, 14, 10, (HALDI, "#fff3c4")),
+         # stage and screen
+         f'<rect x="90" y="70" width="220" height="120" rx="6" fill="#fff" opacity=".1"/><rect x="100" y="80" width="200" height="100" rx="4" fill="{CREAM}"/>',
+         f'<path d="M120 160l40-40 30 26 26-18 64 32" fill="none" stroke="{MAROON}" stroke-width="5" stroke-linejoin="round"/>',
+         f'<circle cx="270" cy="104" r="12" fill="{HALDI}"/>',
+         f'<rect x="40" y="200" width="320" height="22" fill="{MAROON}"/><rect x="40" y="200" width="320" height="5" fill="{HALDI}"/>',
+         # podium
+         f'<path d="M180 222l6-50h28l6 50z" fill="#2a3442"/><rect x="176" y="168" width="48" height="8" rx="2" fill="{GOLD}"/>',
+         # audience
+         *[f'<circle cx="{x}" cy="{y}" r="11" fill="#141c26"/><path d="M{x-16} {y+36}c0-18 7-24 16-24s16 6 16 24z" fill="#141c26"/>' for x, y in ((60, 250), (110, 256), (160, 250), (240, 250), (290, 256), (340, 250))],
+         *[marigold(x, 222, 9) for x in (52, 348)]]
+    return svg(400, 300, "".join(b), "Illustration of a corporate event stage with a screen, podium and audience")
+
 out = sys.argv[1]
 for name, fn in (("food", food), ("guest-stay", stay), ("haldi", haldi), ("sangeeth", sangeeth), ("vratham", vratham),
-                 ("wedding-mandap", mandap), ("wedding-garlands", garlands), ("wedding-talambralu", talambralu)):
+                 ("wedding-mandap", mandap), ("wedding-garlands", garlands), ("wedding-talambralu", talambralu),
+                 ("birthday", birthday), ("corporate", corporate)):
     open(f"{out}/{name}.svg", "w").write(fn())
 for i in range(5):
     open(f"{out}/team-{i+1}.svg", "w").write(avatar(i))

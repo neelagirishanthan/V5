@@ -90,7 +90,7 @@
 <body>
 
 <div class="utility"><div class="wrap">
-  <span>Indian weddings across the Seattle area</span>
+  <span>Weddings, birthdays and corporate events across the Seattle area</span>
   <span>Call or WhatsApp <a href="tel:+14255031212">(425) 503-1212</a></span>
 </div></div>
 
@@ -102,7 +102,7 @@
       <a href="/#services">Services</a>
       <a href="/#ceremonies">Ceremonies</a>
       <a href="/calendar/" aria-current="page">Calendar</a>
-      <a href="/#weddings">Our weddings</a>
+      <a href="/#weddings">Our work</a>
       <a href="/#about">About</a>
       <a class="btn primary small" href="/intake/">Request a quote</a>
     </nav>
@@ -114,7 +114,7 @@
     <div class="wrap">
       <div class="eyebrow">Our calendar</div>
       <h1>Celebrations we're planning</h1>
-      <p>Every Haldi, Sangeeth, Pelli and Vratham on our books, month by month. Pick a day to see what's on, or check whether your date looks open.</p>
+      <p>Every wedding ceremony, birthday party and corporate event on our books, month by month. Pick a day to see what's on, or check whether your date looks open.</p>
       <div class="stats" aria-live="polite">
         <div class="stat"><b id="s-upcoming">–</b><span>Upcoming celebrations</span></div>
         <div class="stat"><b id="s-ceremonies">–</b><span>Ceremonies ahead</span></div>
@@ -134,7 +134,7 @@
         </div>
       </div>
       <div class="grid" id="grid" role="grid" aria-labelledby="m-title"></div>
-      <div class="tbc" id="tbc" hidden><h3>This month · dates to be confirmed</h3><div id="tbc-list"></div></div>
+      <div class="tbc" id="tbc" hidden><h3 id="tbc-title">Also this month</h3><div id="tbc-list"></div></div>
       <div class="legend" id="legend"></div>
     </div>
 
@@ -155,6 +155,8 @@
   <section class="wrap agenda">
     <h2>Coming up</h2>
     <div class="ag-list" id="agenda"><div class="empty">Loading our calendar…</div></div>
+    <h2 style="margin-top:44px">Recently completed</h2>
+    <div class="ag-list" id="done-list"><div class="empty">Loading…</div></div>
     <p class="privacy">We only show ceremony types and the general area. Family names and venues stay private.</p>
   </section>
 </main>
@@ -167,7 +169,7 @@
       <p style="margin:0;max-width:22em">Indian and Telugu wedding planning across the Seattle area.</p>
     </div>
     <div><h3>Services</h3><ul><li><a href="/#services">Food &amp; catering</a></li><li><a href="/#services">Decor</a></li><li><a href="/#services">Photography</a></li><li><a href="/#services">Garlands &amp; rentals</a></li><li><a href="/#services">Guest accommodation</a></li></ul></div>
-    <div><h3>Plan</h3><ul><li><a href="/intake/">Request a quote</a></li><li><a href="/calendar/">Our calendar</a></li><li><a href="/#ceremonies">Ceremonies</a></li><li><a href="/#about">About us</a></li></ul></div>
+    <div><h3>Plan</h3><ul><li><a href="/intake/">Request a quote</a></li><li><a href="/calendar/">Our calendar</a></li><li><a href="/#ceremonies">Ceremonies</a></li><li><a href="/terms/">Service terms</a></li><li><a href="/#about">About us</a></li></ul></div>
     <div><h3>Contact</h3><ul><li><a href="tel:+14255031212">(425) 503-1212</a></li><li>Call or WhatsApp</li><li>Seattle area, WA</li></ul></div>
     <div class="legal"><span>© <span data-year>2026</span> V5 Events</span><span>Every ceremony, beautifully planned.</span></div>
   </div>
@@ -244,10 +246,13 @@ function render() {
   }
   const tbc = byMonth[iso(y, m, 1).slice(0, 7)] || [];
   $("tbc").hidden = !tbc.length;
+  $("tbc-title").textContent = tbc.every((c) => c.status === "completed") ? "Also this month" : "This month · dates to be confirmed";
   $("tbc-list").replaceChildren(...tbc.map((c) => {
     const row = document.createElement("div"); row.className = "tbc-item";
     const b = document.createElement("b"); b.textContent = c.title + (c.area ? " · " + c.area : "");
     const chips = document.createElement("div"); chips.className = "chips"; chips.append(...(c.ceremonies || []).map(chip));
+    if (c.highlights) chips.append(...c.highlights.map((h) => { const t = document.createElement("span"); t.className = "chip"; t.textContent = h; return t; }));
+    if (c.status === "completed") { const t = document.createElement("span"); t.className = "status done"; t.textContent = "Completed"; chips.append(t); }
     row.append(b, chips); return row;
   }));
 }
@@ -258,7 +263,7 @@ function showDay(key) {
   const tbc = byMonth[key.slice(0, 7)] || [];
   if (!evs.length) {
     const p = document.createElement("p");
-    p.textContent = tbc.length ? "No confirmed ceremonies this day. This month also has a celebration with dates still to be confirmed." : "Nothing on our calendar this day.";
+    p.textContent = tbc.some((c) => c.status !== "completed") ? "No confirmed ceremonies this day. This month also has a celebration with dates still to be confirmed." : "Nothing on our calendar this day.";
     $("d-list").replaceChildren(p); return;
   }
   $("d-list").replaceChildren(...evs.map((e) => {
@@ -277,7 +282,7 @@ function check(key) {
   const msg = document.createElement("div");
   if (key < today) { r.className = "result maybe"; msg.textContent = `${nice} has already passed. Pick an upcoming date.`; r.replaceChildren(msg); return; }
   if (evs.length) { r.className = "result busy"; msg.innerHTML = "<b>We have a celebration that day.</b> "; msg.append(`Our team may still be able to help, so ask us about ${nice}.`); }
-  else if (tbc.length) { r.className = "result maybe"; msg.innerHTML = "<b>Looks open, but check with us.</b> "; msg.append("We have a celebration that month with dates still being confirmed."); }
+  else if (tbc.some((c) => c.status !== "completed")) { r.className = "result maybe"; msg.innerHTML = "<b>Looks open, but check with us.</b> "; msg.append("We have a celebration that month with dates still being confirmed."); }
   else { r.className = "result open"; msg.innerHTML = "<b>Looks open!</b> "; msg.append(`Nothing is on our calendar for ${nice} yet.`); }
   r.replaceChildren(msg, cta);
   view = { y: +key.slice(0, 4), m: +key.slice(5, 7) - 1 }; selected = key; render(); showDay(key);
@@ -303,6 +308,27 @@ function agenda() {
   }));
 }
 
+function doneList() {
+  const items = celebrations.filter((c) => c.status === "completed" || (c.days && c.days.length ? c.days.every((d) => d.date < today) : c.month < today.slice(0, 7)))
+    .map((c) => ({ c, key: c.days && c.days.length ? c.days[0].date : c.month + "-01" }))
+    .sort((a, b) => b.key.localeCompare(a.key));
+  if (!items.length) { $("done-list").innerHTML = '<div class="empty">Nothing completed yet.</div>'; return; }
+  $("done-list").replaceChildren(...items.map(({ c, key }) => {
+    const row = document.createElement("article"); row.className = "ag";
+    const w = document.createElement("div"); w.className = "when";
+    const b = document.createElement("b"); b.textContent = V5.fmtDate(key, { month: "short" });
+    const sm = document.createElement("span"); sm.textContent = c.days && c.days.length ? `${key.slice(8).replace(/^0/, "")}–${c.days[c.days.length - 1].date.slice(8).replace(/^0/, "")} · ${key.slice(0, 4)}` : key.slice(0, 4);
+    w.append(b, sm);
+    const mid = document.createElement("div"); const h = document.createElement("h3"); h.textContent = c.title + (c.area ? " · " + c.area : "");
+    const chips = document.createElement("div"); chips.className = "chips";
+    chips.append(...[...new Set((c.days && c.days.length ? c.days.map((d) => d.ceremony) : c.ceremonies) || [])].map(chip));
+    if (c.highlights) chips.append(...c.highlights.map((x) => { const t = document.createElement("span"); t.className = "chip"; t.textContent = x; return t; }));
+    mid.append(h, chips);
+    const st = document.createElement("span"); st.className = "status done"; st.textContent = "Completed";
+    row.append(w, mid, st); return row;
+  }));
+}
+
 $("prev").addEventListener("click", () => { view.m--; if (view.m < 0) { view.m = 11; view.y--; } render(); });
 $("next").addEventListener("click", () => { view.m++; if (view.m > 11) { view.m = 0; view.y++; } render(); });
 $("today-btn").addEventListener("click", () => { view = { y: +today.slice(0, 4), m: +today.slice(5, 7) - 1 }; render(); });
@@ -310,7 +336,7 @@ $("check").addEventListener("change", (e) => { if (e.target.value) check(e.targe
 
 legend();
 render();
-V5.loadCalendar().then((data) => { index(data); stats(); render(); agenda(); }).catch(() => {
+V5.loadCalendar().then((data) => { index(data); stats(); render(); agenda(); doneList(); }).catch(() => {
   $("agenda").innerHTML = '<div class="empty">Our calendar could not load. Please refresh the page.</div>';
 });
 </script>
