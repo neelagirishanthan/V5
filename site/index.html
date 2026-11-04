@@ -3,251 +3,447 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>V5 Event Management · Telugu Weddings</title>
-<meta name="description" content="V5 Event Management plans Telugu weddings end to end: Haldi, Pelli Koduku & Kooturu, Sangeeth, Mehandi, Pelli & Reception and Vratham. Food, decor, photography, garlands, rentals and guest stay.">
+<title>V5 Events · Indian Wedding Planning in Seattle</title>
+<meta name="description" content="V5 Events plans Indian and Telugu weddings in the Seattle area: Haldi, Pelli Koduku & Kooturu, Sangeeth, Mehandi, Pelli & Reception and Vratham. Food, decor, photography, garlands, rentals and guest stay.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:image" content="/images/procession-canopy.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Hind:wght@400;500;600&family=Martel+Sans:wght@600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Hind:wght@400;500;600&family=Martel+Sans:wght@600;700;800&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
 <style>
-/* Layout: one long page; maroon hero with a toran border, then events timeline, services grid, sample menu, process steps, closing call to action. */
-:root {
-  --paper: #fbfaf7; --surface: #ffffff; --ink: #2a1418; --muted: #6a5558; --line: #e6dcd6;
-  --kumkum: #9b1c2c; --kumkum-deep: #7a1422; --kumkum-soft: #f6e4e4; --on-kumkum: #fbfaf7;
-  --haldi: #e3a514; --haldi-text: #f2c14e; --haldi-soft: #fdf3d6; --leaf: #2f6b3a; --nv: #b3261e;
-  --display: "Rozha One", Georgia, serif; --body: "Hind", "Segoe UI", system-ui, sans-serif; --label: "Martel Sans", "Hind", system-ui, sans-serif;
-}
-@media (prefers-color-scheme: dark) {
-  :root { --paper: #170d0f; --surface: #22161a; --ink: #f4e9e4; --muted: #b8a39f; --line: #3a2a2d;
-    --kumkum: #8a1a28; --kumkum-deep: #5e111b; --kumkum-soft: #3a1d22; --haldi-soft: #3a2f14; --leaf: #7cc58a; --nv: #ff8a80; color-scheme: dark; }
-}
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--paper); color: var(--ink); font: 17px/1.6 var(--body); }
-a { color: inherit; }
-.wrap { max-width: 1100px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
-h1, h2, h3 { text-wrap: balance; }
-.eyebrow { font: 800 12px/1 var(--label); letter-spacing: .16em; text-transform: uppercase; color: var(--kumkum); }
-:focus-visible { outline: 2px solid var(--haldi); outline-offset: 3px; }
+/* Home: photo hero with a quick-start planner bar, service tiles, planning tools, ceremonies rail,
+   calendar teaser, real weddings, testimonials, about, process, closing call to action. */
+.hero { position: relative; background: var(--blush); }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 48px; align-items: center; padding-block: 56px 96px; }
+.hero h1 { font: 600 clamp(46px, 6.2vw, 80px)/0.98 var(--display); margin: 14px 0 18px; }
+.hero h1 em { font-style: italic; color: var(--kumkum); }
+.hero p.lede { font-size: 19px; color: var(--muted); margin: 0 0 28px; max-width: 32em; }
+.hero-photos { display: grid; grid-template-columns: 1.2fr 1fr; grid-template-rows: 1fr 1fr; gap: 14px; height: 470px; }
+.hero-photos .ph:first-child { grid-row: 1 / 3; }
+.planner { position: relative; z-index: 2; margin: -52px auto 0; }
+.planner form { background: #fff; border-radius: 22px; box-shadow: 0 14px 40px rgba(42,20,24,.12); padding: 14px; display: grid; grid-template-columns: 1.4fr 1fr 1fr auto; gap: 8px; align-items: end; }
+.planner label { display: grid; gap: 4px; padding: 8px 14px; border-radius: 14px; }
+.planner label:hover { background: var(--blush); }
+.planner label span { font: 800 11px/1 var(--label); letter-spacing: .12em; text-transform: uppercase; color: var(--kumkum); }
+.planner select, .planner input { border: 0; background: transparent; font: 500 16px/1.4 var(--body); color: var(--ink); padding: 4px 0; width: 100%; min-width: 0; }
+.planner select:focus-visible, .planner input:focus-visible { outline: none; }
+.planner label:focus-within { background: var(--blush); outline: 2px solid var(--haldi); }
+.planner .btn { height: 56px; }
+.quick { display: flex; gap: 8px 10px; flex-wrap: wrap; align-items: center; padding: 16px 6px 0; font: 600 14px/1 var(--label); }
+.quick span { color: var(--muted); margin-right: 4px; }
+.quick a { text-decoration: none; padding: 9px 14px; border: 1px solid var(--line); border-radius: 999px; background: #fff; }
+.quick a:hover { border-color: var(--ink); }
+.quick a.all { border-color: transparent; color: var(--kumkum); }
 
-/* Nav + hero */
-.hero { background: var(--kumkum); color: var(--on-kumkum); }
-nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 18px; flex-wrap: wrap; }
-.logo { font: 400 24px/1 var(--display); text-decoration: none; }
-.logo span { color: var(--haldi-text); }
-.links { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; font: 600 14px/1 var(--label); }
-.links a { text-decoration: none; opacity: .9; }
-.links a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
-.btn { display: inline-block; font: 700 15px/1 var(--label); padding: 15px 22px; border-radius: 10px; text-decoration: none; border: 1.5px solid transparent; }
-.btn.gold { background: var(--haldi); color: #2a1418; }
-.btn.gold:hover { background: #f2c14e; }
-.btn.line { border-color: currentColor; }
-.btn.small { padding: 10px 16px; font-size: 14px; }
-.hero-body { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 48px; align-items: center; padding-block: 48px 72px; }
-.hero .eyebrow { color: var(--haldi-text); }
-.hero h1 { font: 400 clamp(40px, 6.4vw, 72px)/1.02 var(--display); margin: 14px 0 18px; }
-.hero p { font-size: 19px; color: #f6e4e4; max-width: 34em; margin: 0 0 28px; }
-.ctas { display: flex; gap: 12px; flex-wrap: wrap; }
-.order { background: rgba(0,0,0,.18); border-radius: 14px; padding: 22px 24px; display: grid; gap: 4px; }
-.order .k { font: 800 11px/1 var(--label); letter-spacing: .14em; text-transform: uppercase; color: var(--haldi-text); margin-bottom: 10px; }
-.order div { display: flex; gap: 14px; align-items: baseline; padding: 7px 0; border-bottom: 1px dashed rgba(255,255,255,.22); }
-.order div:last-child { border-bottom: 0; }
-.order b { font: 400 20px/1 var(--display); color: var(--haldi-text); width: 18px; flex: none; }
-.order span { font: 600 16px/1.3 var(--label); }
-.toran { height: 26px; background:
-  radial-gradient(circle at 12px 6px, var(--haldi) 0 7px, transparent 7.5px) 0 0 / 48px 26px repeat-x,
-  radial-gradient(circle at 36px 10px, #e8742a 0 6px, transparent 6.5px) 0 0 / 48px 26px repeat-x,
-  linear-gradient(var(--kumkum), var(--kumkum)) 0 0 / 100% 6px no-repeat,
-  repeating-linear-gradient(90deg, transparent 0 22px, var(--leaf) 22px 26px, transparent 26px 48px) 0 0 / 100% 18px no-repeat; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px 18px; }
+.tile { text-decoration: none; display: grid; gap: 10px; }
+.tile .ph { aspect-ratio: 4 / 3; transition: transform .25s ease; }
+.tile:hover .ph { transform: translateY(-3px); }
+.tile h3 { margin: 0; font: 700 17px/1.2 var(--label); }
+.tile p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.45; }
 
-/* Sections */
-section.s { padding-block: 72px 24px; }
-.s-head { display: grid; gap: 10px; margin-bottom: 32px; max-width: 46em; }
-.s-head h2 { font: 400 clamp(30px, 4vw, 42px)/1.1 var(--display); margin: 0; }
-.s-head p { margin: 0; color: var(--muted); }
+.tools { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.tool { background: var(--blush); border-radius: 20px; padding: 28px; display: grid; gap: 10px; align-content: start; text-decoration: none; border: 1px solid transparent; }
+.tool:hover { border-color: var(--haldi); }
+.tool svg { width: 40px; height: 40px; stroke: var(--kumkum); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.tool h3 { margin: 4px 0 0; font: 600 28px/1.1 var(--display); }
+.tool p { margin: 0; color: var(--muted); }
+.tool .more { margin-top: 6px; }
 
-.timeline { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; counter-reset: ev; }
-.ev { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 6px; align-content: start; }
-.ev .n { font: 400 30px/1 var(--display); color: var(--haldi); }
-.ev h3 { margin: 4px 0 0; font: 400 23px/1.2 var(--display); }
-.ev p { margin: 0; color: var(--muted); font-size: 15.5px; }
+.rail { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; }
+.cer { display: grid; gap: 10px; }
+.cer .ph { aspect-ratio: 3 / 4; }
+.cer .n { font: 800 11px/1 var(--label); letter-spacing: .14em; color: var(--kumkum); }
+.cer h3 { margin: 0; font: 600 24px/1.1 var(--display); }
+.cer p { margin: 0; color: var(--muted); font-size: 14.5px; line-height: 1.45; }
 
-.services { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
-.svc { padding: 24px 22px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); display: grid; gap: 8px; align-content: start; background: var(--surface); }
-.svc svg { width: 30px; height: 30px; stroke: var(--kumkum); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-.svc h3 { margin: 0; font: 700 17px/1.3 var(--label); }
-.svc p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.5; }
+.cal-band { background: var(--ink); color: #f4e9e4; border-radius: 28px; padding: 44px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 40px; align-items: center; }
+.cal-band .eyebrow { color: var(--haldi-text); }
+.cal-band h2 { font: 600 clamp(34px, 4vw, 48px)/1.05 var(--display); margin: 10px 0 12px; color: #fff; }
+.cal-band p { margin: 0 0 22px; color: #d9c9c4; }
+.upcoming { display: grid; gap: 10px; }
+.up { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 16px; align-items: center; background: rgba(255,255,255,.06); border-radius: 16px; padding: 14px 16px; }
+.up .when { text-align: center; border-right: 1px solid rgba(255,255,255,.15); padding-right: 12px; }
+.up .when b { display: block; font: 800 26px/1 var(--label); color: #fff; }
+.up .when span { font: 800 11px/1 var(--label); letter-spacing: .12em; text-transform: uppercase; color: var(--haldi-text); }
+.up h3 { margin: 0 0 4px; font: 700 16px/1.3 var(--label); color: #fff; }
+.up .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; font: 600 12px/1 var(--label); padding: 5px 9px; border-radius: 999px; background: rgba(255,255,255,.1); color: #f4e9e4; }
+.chip i { width: 8px; height: 8px; border-radius: 50%; }
+.up-empty { color: #d9c9c4; font-size: 15px; }
 
-.menu-wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: 40px; align-items: start; }
-.menu { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 26px 28px; }
-.menu h3 { margin: 0 0 4px; font: 400 24px/1.2 var(--display); }
-.menu .cap { color: var(--muted); font-size: 14px; margin-bottom: 16px; }
-.menu ul { list-style: none; margin: 0; padding: 0; columns: 2; column-gap: 28px; font-size: 15.5px; }
-.menu li { break-inside: avoid; display: flex; gap: 8px; align-items: baseline; padding: 3px 0; }
-.menu .grp { font: 800 11px/1.6 var(--label); letter-spacing: .1em; text-transform: uppercase; color: var(--kumkum); margin-top: 8px; }
-.v, .nv { flex: none; display: inline-flex; width: 12px; height: 12px; border: 1.6px solid var(--leaf); align-items: center; justify-content: center; position: relative; top: 1px; }
-.v::after, .nv::after { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--leaf); }
-.nv { border-color: var(--nv); } .nv::after { background: var(--nv); }
-.legend { display: flex; gap: 18px; color: var(--muted); font-size: 14px; margin-top: 16px; flex-wrap: wrap; }
+.weddings { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+.ph.has-img::before { display: none; }
+.ph.illus .mark { position: absolute; top: 10px; left: 10px; margin: 0; font: 700 11px/1 var(--label); background: rgba(255,255,255,.9); color: var(--kumkum); padding: 6px 9px; border-radius: 999px; letter-spacing: .02em; }
 
-.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
-.step { border-top: 3px solid var(--haldi); padding-top: 16px; display: grid; gap: 6px; align-content: start; }
-.step .k { font: 800 12px/1 var(--label); letter-spacing: .12em; text-transform: uppercase; color: var(--kumkum); }
-.step h3 { margin: 0; font: 400 22px/1.2 var(--display); }
+.ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.moments { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: 220px; grid-auto-flow: dense; gap: 12px; }
+.moments figure { margin: 0; border-radius: var(--radius); overflow: hidden; }
+.moments figure:nth-child(1) { grid-row: span 2; }
+.moments figure:nth-child(5), .moments figure:nth-child(7), .moments figure:nth-child(8) { grid-column: span 2; }
+.moments img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; transition: transform .4s ease; }
+.moments figure:hover img { transform: scale(1.03); }
+.feature { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 36px; align-items: center; margin-bottom: 40px; }
+.video { position: relative; aspect-ratio: 16 / 9; border-radius: 22px; overflow: hidden; background: radial-gradient(circle at 30% 30%, #9b1c2c, #3d0b12); }
+.video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.play { position: absolute; inset: 0; width: 100%; border: 0; background: url("/assets/mark.svg") center 38% / 90px no-repeat, transparent; cursor: pointer; display: grid; place-items: center; align-content: end; gap: 14px; padding-bottom: 36px; color: #fff; }
+.play .disc { width: 76px; height: 76px; border-radius: 50%; background: var(--haldi); display: grid; place-items: center; transition: transform .2s ease; }
+.play:hover .disc { transform: scale(1.06); }
+.play svg { width: 30px; height: 30px; fill: var(--ink); margin-left: 4px; }
+.play .lbl { font: 700 15px/1 var(--label); }
+#video { background: linear-gradient(rgba(42,20,24,.25), rgba(42,20,24,.7)), url("/images/talambralu.jpg") center / cover; }
+#play { background: none; }
+.feature-text h3 { font: 600 clamp(32px, 3.6vw, 44px)/1.05 var(--display); margin: 10px 0 10px; }
+.feature-text p { color: var(--muted); margin: 0 0 18px; }
+.days { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.days li { display: flex; gap: 16px; align-items: baseline; border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+.days b { font: 600 22px/1 var(--display); color: var(--kumkum); width: 74px; font-variant-numeric: lining-nums; }
+.days span { font: 600 15px/1.3 var(--label); }
+.credit { margin: 14px 0 0 !important; font-size: 13.5px; }
+.wed { display: grid; gap: 12px; }
+.wed .ph { aspect-ratio: 4 / 5; }
+.wed h3 { margin: 0; font: 600 26px/1.1 var(--display); }
+.wed p { margin: 0; color: var(--muted); font-size: 15px; }
+
+.quotes { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(300px, 1fr); gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 10px; }
+.quote { scroll-snap-align: start; }
+.quote { border: 1px solid var(--line); border-radius: 20px; padding: 28px; display: grid; gap: 14px; align-content: start; }
+.quote .stars { color: var(--haldi); letter-spacing: 2px; font-size: 15px; }
+.quote blockquote { margin: 0; font: italic 500 22px/1.35 var(--display); }
+.quote cite { font: 700 13px/1.2 var(--label); font-style: normal; color: var(--muted); }
+.pending { color: #a8928d; }
+
+.about { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: center; }
+.about h2 { font: 600 clamp(36px, 4.4vw, 54px)/1.03 var(--display); margin: 12px 0 18px; }
+.about p { color: var(--muted); margin: 0 0 14px; }
+.team { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.member { display: grid; gap: 8px; text-align: center; }
+.member .ph { aspect-ratio: 1; border-radius: 50%; min-height: 0; }
+.member .ph::before { background-size: 34px; }
+.member .ph span { display: none; }
+.member b { font: 700 13px/1.2 var(--label); }
+.facts { display: flex; gap: 32px; margin-top: 22px; flex-wrap: wrap; }
+.facts div b { display: block; font: 800 36px/1 var(--label); color: var(--kumkum); }
+.facts div span { font: 700 12px/1.3 var(--label); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; counter-reset: st; }
+.step { border-top: 2px solid var(--ink); padding-top: 18px; display: grid; gap: 6px; align-content: start; }
+.step .k { font: 800 12px/1 var(--label); letter-spacing: .14em; color: var(--kumkum); }
+.step h3 { margin: 0; font: 600 26px/1.1 var(--display); }
 .step p { margin: 0; color: var(--muted); font-size: 15.5px; }
 
-.close { margin-top: 72px; background: var(--kumkum-deep); color: var(--on-kumkum); }
-.close .wrap { padding-block: 56px; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
-.close h2 { font: 400 clamp(28px, 4vw, 40px)/1.1 var(--display); margin: 0 0 6px; }
-.close p { margin: 0; color: #f6e4e4; }
-footer { padding-block: 26px 36px; color: var(--muted); font-size: 14px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.cta { margin-top: 96px; background: var(--kumkum); color: #fff; border-radius: 28px; padding: 56px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: center; position: relative; overflow: hidden; }
+.cta h2 { font: 600 clamp(34px, 4.4vw, 52px)/1.05 var(--display); margin: 0 0 8px; }
+.cta p { margin: 0; color: #f6e4e4; }
+.cta .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.cta .btn.outline { border-color: #fff; color: #fff; }
+.cta .btn.outline:hover { background: #fff; color: var(--kumkum); }
 
-@media (max-width: 900px) {
-  .hero-body, .menu-wrap { grid-template-columns: minmax(0, 1fr); }
-  .timeline, .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .services { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 1020px) {
+  .rail { grid-template-columns: repeat(6, minmax(200px, 1fr)); overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 10px; }
+  .cer { scroll-snap-align: start; }
+}
+@media (max-width: 960px) {
+  .hero .wrap, .cal-band, .about, .feature { grid-template-columns: minmax(0, 1fr); }
+  .hero-photos { height: 340px; }
+  .planner form { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .planner .btn { grid-column: 1 / -1; }
+  .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tools, .weddings { grid-template-columns: minmax(0, 1fr); }
+  .quotes { grid-auto-columns: 82%; }
+  .weddings .wed:nth-child(n+2) .ph { aspect-ratio: 16 / 10; }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .moments { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 180px; }
+  .cta { grid-template-columns: minmax(0, 1fr); padding: 40px 28px; }
+  .cal-band { padding: 32px 22px; }
 }
 @media (max-width: 560px) {
-  .timeline, .steps, .services { grid-template-columns: minmax(0, 1fr); }
-  .links a:not(.btn) { display: none; }
-  .menu ul { columns: 1; }
+  .planner form { grid-template-columns: minmax(0, 1fr); }
+  .hero-photos { height: 260px; }
+  .steps { grid-template-columns: minmax(0, 1fr); }
+  .team { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+  .member b { font-size: 11px; }
 }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 </style>
 </head>
 <body>
 
-<header class="hero">
-  <div class="wrap">
-    <nav aria-label="Main">
-      <a class="logo" href="/">V5 <span>Event Management</span></a>
-      <div class="links">
-        <a href="#events">Events</a>
-        <a href="#services">Services</a>
-        <a href="#process">How it works</a>
-        <a class="btn gold small" href="/intake/">Start planning</a>
-      </div>
+<div class="utility"><div class="wrap">
+  <span>Indian weddings across the Seattle area</span>
+  <span>Call or WhatsApp <a href="tel:+14255031212">(425) 503-1212</a></span>
+</div></div>
+
+<header class="site-header">
+  <div class="wrap" style="position:relative">
+    <a class="logo" href="/" aria-label="V5 Events home"><img src="/assets/logo.svg" alt="V5 Events · Event Management · Seattle" width="430" height="120"></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+    <nav class="menu" id="menu" aria-label="Main">
+      <a href="#services">Services</a>
+      <a href="#ceremonies">Ceremonies</a>
+      <a href="/calendar/">Calendar</a>
+      <a href="#weddings">Our weddings</a>
+      <a href="#about">About</a>
+      <a class="btn primary small" href="/intake/">Request a quote</a>
     </nav>
-    <div class="hero-body">
-      <div>
-        <div class="eyebrow">Telugu weddings · planned end to end</div>
-        <h1>Every ceremony, planned with you.</h1>
-        <p>From Haldi to Vratham, we handle the food, decor, photography, garlands, rentals and guest stay, and we're on site every event day so your family can enjoy the celebrations.</p>
-        <div class="ctas">
-          <a class="btn gold" href="/intake/">Tell us about your wedding</a>
-          <a class="btn line" href="#services">See what we cover</a>
-        </div>
-      </div>
-      <div class="order" aria-label="The ceremonies we plan">
-        <div class="k">The ceremonies we plan</div>
-        <div><b>1</b><span>Haldi</span></div>
-        <div><b>2</b><span>Pelli Koduku &amp; Kooturu</span></div>
-        <div><b>3</b><span>Sangeeth</span></div>
-        <div><b>4</b><span>Mehandi &amp; Bangles</span></div>
-        <div><b>5</b><span>Pelli &amp; Reception</span></div>
-        <div><b>6</b><span>Vratham</span></div>
-      </div>
-    </div>
   </div>
-  <div class="toran" aria-hidden="true"></div>
 </header>
 
 <main>
-  <section class="s wrap" id="events">
-    <div class="s-head">
-      <div class="eyebrow">The events</div>
-      <h2>Six ceremonies, one team</h2>
-      <p>Choose the events you're celebrating. We plan each one on its own terms: its guests, decor, menu, music and rituals.</p>
-    </div>
-    <div class="timeline">
-      <article class="ev"><div class="n">1</div><h3>Haldi</h3><p>Turmeric paste for the bride and groom, with marigolds, garlands and the family close by.</p></article>
-      <article class="ev"><div class="n">2</div><h3>Pelli Koduku &amp; Kooturu</h3><p>The ceremonies that make the groom and bride ready for the wedding, with the priest and fresh flowers.</p></article>
-      <article class="ev"><div class="n">3</div><h3>Sangeeth</h3><p>An evening of music and dance: stage, lighting, DJ, bar and live counters.</p></article>
-      <article class="ev"><div class="n">4</div><h3>Mehandi &amp; Bangles</h3><p>Henna for the bride and guests, with the gaajulu ceremony, seating and a backdrop for photos.</p></article>
-      <article class="ev"><div class="n">5</div><h3>Pelli &amp; Reception</h3><p>The muhurtham at the mandapam, then the reception: full catering, decor and photo coverage.</p></article>
-      <article class="ev"><div class="n">6</div><h3>Vratham</h3><p>Satyanarayana Swamy Vratham after the wedding, with the priest, a veg meal and simple floral decor.</p></article>
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Seattle · Indian &amp; Telugu weddings</div>
+        <h1>Every ceremony, <em>beautifully</em> planned.</h1>
+        <p class="lede">From Haldi to Vratham, we bring together the food, decor, photography, garlands, rentals and guest stay, and we're on site every event day so your family can simply celebrate.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <a class="btn primary" href="/intake/">Request a quote</a>
+          <a class="btn outline" href="/calendar/">See our calendar</a>
+        </div>
+      </div>
+      <div class="hero-photos">
+        <div class="ph has-img"><img src="/images/procession-canopy.jpg" alt="The wedding party walks under a floral canopy through a garden of red trees" decoding="async"></div>
+        <div class="ph has-img"><img src="/images/mandap-aisle.jpg" alt="Draped aisle with rose arrangements leading to a floral mandap" decoding="async"></div>
+        <div class="ph has-img"><img src="/images/bride-portrait.jpg" alt="Bride in a pink silk saree and jewellery" decoding="async"></div>
+      </div>
     </div>
   </section>
+
+  <div class="wrap planner">
+    <form id="planner" action="/intake/" method="get" aria-label="Start planning">
+      <label><span>Your celebration</span>
+        <select name="events" id="pl-events">
+          <option value="haldi,pellikoduku,sangeeth,mehandi,pelli,vratham">Full wedding · all six ceremonies</option>
+          <option value="haldi,pellikoduku,pelli">Haldi, Pelli Koduku &amp; Pelli</option>
+          <option value="pelli">Pelli &amp; Reception only</option>
+          <option value="sangeeth">Sangeeth</option>
+          <option value="mehandi">Mehandi &amp; Bangles</option>
+          <option value="haldi">Haldi</option>
+          <option value="vratham">Vratham</option>
+        </select>
+      </label>
+      <label><span>Guests</span><input type="number" name="guests" id="pl-guests" min="1" inputmode="numeric" placeholder="e.g. 250"></label>
+      <label><span>Wedding date</span><input type="date" name="date" id="pl-date"></label>
+      <button class="btn primary" type="submit">Start planning</button>
+    </form>
+    <nav class="quick" aria-label="Popular services">
+      <span>Popular:</span>
+      <a href="#services">Decor</a><a href="#services">Food &amp; live counters</a><a href="#services">Photography</a><a href="#services">Garlands</a><a href="#services">Guest stay</a><a href="#services" class="all">See all services →</a>
+    </nav>
+  </div>
 
   <section class="s wrap" id="services">
     <div class="s-head">
-      <div class="eyebrow">What we cover</div>
-      <h2>Everything your wedding needs</h2>
-      <p>We work with trusted vendors for each service. You see their work and choose, and we manage them for you.</p>
+      <div><div class="eyebrow">What we take care of</div><h2>Everything your wedding needs, in one place</h2>
+      <p>We work with trusted vendors for each service. You see their work and choose; we manage them for you.</p></div>
+      <a class="more" href="/intake/">Request a quote →</a>
     </div>
-    <div class="services">
-      <div class="svc"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 18h22a11 11 0 0 1-22 0Z"/><path d="M3 27h26M12 12c0-3 2-3 2-6M18 12c0-3 2-3 2-6"/></svg><h3>Food</h3><p>Catering for every event with veg and non-veg menus, cooked and served separately, plus live counters.</p></div>
-      <div class="svc"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 28V12l12-8 12 8v16"/><path d="M10 28V17h12v11M4 12h24"/></svg><h3>Decor</h3><p>Mandapam, stage, floral, lighting and backdrops from our decor vendor, finalised within your budget.</p></div>
-      <div class="svc"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="9" width="26" height="18" rx="3"/><circle cx="16" cy="18" r="5"/><path d="M11 9l2-4h6l2 4"/></svg><h3>Photography</h3><p>Photo and video coverage. Meet our photographer, review their portfolio and decide.</p></div>
-      <div class="svc"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 14h20M8 14v13M24 14v13M10 7h12l4 7H6Z"/></svg><h3>Event item rentals</h3><p>Tables, chairs, linens and event essentials, delivered, set up and collected.</p></div>
-      <div class="svc"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 8c4 12 20 12 24 0"/><circle cx="8" cy="13" r="2"/><circle cx="13" cy="16" r="2"/><circle cx="19" cy="16" r="2"/><circle cx="24" cy="13" r="2"/><path d="M16 18v7"/></svg><h3>Garlands</h3><p>Fresh flower garlands for each ceremony from our garland vendor, made on the day.</p></div>
-      <div class="svc"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3l3.5 8 8.5.8-6.4 5.6 1.9 8.4L16 21.5 8.5 25.8l1.9-8.4L4 11.8l8.5-.8Z"/></svg><h3>Grandeur</h3><p>Grand entrances and special touches that make the big moments memorable.</p></div>
-      <div class="svc"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 26V10M3 20h26v6M3 15h9a3 3 0 0 1 3 3v2M15 15h10a4 4 0 0 1 4 4v1"/></svg><h3>Accommodation</h3><p>Rental stays near your venues, matched to how many guests each place can host.</p></div>
-      <div class="svc"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="12"/><path d="M16 9v7l5 3"/></svg><h3>On the day</h3><p>Our team and helpers are on site from setup to close. No last-minute hassle.</p></div>
+    <div class="tiles">
+      <a class="tile" href="/intake/"><div class="ph has-img illus"><img src="/images/illustrations/food.svg" alt="Illustration: food counter with a brass handi, banana-leaf meal and dosa" loading="lazy"><span class="mark">Illustration · photo coming soon</span></div><h3>Food &amp; live counters</h3><p>Veg and non-veg menus, cooked and served separately, with dosa, chaat and more.</p></a>
+      <a class="tile" href="/intake/"><div class="ph has-img"><img src="/images/mandap-decor.jpg" alt="Outdoor mandap framed by white drapes and flowers" loading="lazy" decoding="async"></div><h3>Decor</h3><p>Mandapam, stage, floral, lighting and backdrops, finalised within your budget.</p></a>
+      <a class="tile" href="/intake/"><div class="ph has-img"><img src="/images/couple-mountains.jpg" alt="Couple photographed above a mountain lake" loading="lazy" decoding="async"></div><h3>Photography</h3><p>Photo and video coverage. Meet our photographer and review their work first.</p></a>
+      <a class="tile" href="/intake/"><div class="ph has-img"><img src="/images/floral-canopy.jpg" alt="Groom under a canopy of hanging flower garlands" loading="lazy" decoding="async"></div><h3>Garlands</h3><p>Fresh flower garlands for every ceremony, made on the day.</p></a>
+      <a class="tile" href="/intake/"><div class="ph has-img"><img src="/images/grand-procession.jpg" alt="Bride's family entrance procession under a raised canopy" loading="lazy" decoding="async"></div><h3>Grandeur</h3><p>Grand entrances and special touches for the big moments.</p></a>
+      <a class="tile" href="/intake/"><div class="ph has-img"><img src="/images/welcome-decor.jpg" alt="Welcome area with signage, brass lamps and flowers" loading="lazy" decoding="async"></div><h3>Event item rentals</h3><p>Tables, chairs, linens and essentials, delivered, set up and collected.</p></a>
+      <a class="tile" href="/intake/"><div class="ph has-img illus"><img src="/images/illustrations/guest-stay.svg" alt="Illustration: guest house among pine trees" loading="lazy"><span class="mark">Illustration · photo coming soon</span></div><h3>Guest accommodation</h3><p>Rental stays near your venues for family travelling in.</p></a>
+      <a class="tile" href="/intake/"><div class="ph has-img"><img src="/images/wedding-day.jpg" alt="Groom and family on the wedding day" loading="lazy" decoding="async"></div><h3>On the day</h3><p>Our team is on site from setup to close. No last-minute hassle.</p></a>
     </div>
   </section>
 
-  <section class="s wrap" id="menu">
-    <div class="menu-wrap">
-      <div class="s-head" style="margin:0">
-        <div class="eyebrow">A taste of the wedding day</div>
-        <h2>A sample Pelli menu</h2>
-        <p>Every menu is built around your family's preferences. Here's what a full wedding-day spread can look like, with dishes for the kids too.</p>
+  <section class="s wrap" id="tools">
+    <div class="s-head"><div><div class="eyebrow">Plan with us</div><h2>Start planning in minutes</h2></div></div>
+    <div class="tools">
+      <a class="tool" href="/intake/">
+        <svg viewBox="0 0 40 40" aria-hidden="true"><rect x="8" y="5" width="24" height="30" rx="3"/><path d="M14 13h12M14 19h12M14 25h7"/></svg>
+        <h3>Wedding intake form</h3><p>Pick your ceremonies and tell us guests, food, decor, music and stay needs.</p><span class="more">Fill the form →</span></a>
+      <a class="tool" href="/calendar/">
+        <svg viewBox="0 0 40 40" aria-hidden="true"><rect x="5" y="8" width="30" height="27" rx="3"/><path d="M5 16h30M13 4v8M27 4v8"/><circle cx="26" cy="26" r="3"/></svg>
+        <h3>Check your date</h3><p>See what's on our calendar and whether your wedding date looks open.</p><span class="more">Open the calendar →</span></a>
+      <a class="tool" href="tel:+14255031212">
+        <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M10 6h6l3 8-4 3a20 20 0 0 0 8 8l3-4 8 3v6a3 3 0 0 1-3 3A28 28 0 0 1 7 9a3 3 0 0 1 3-3Z"/></svg>
+        <h3>Talk to us</h3><p>Call or WhatsApp (425) 503-1212. We'll walk you through it.</p><span class="more">Call now →</span></a>
+    </div>
+  </section>
+
+  <section class="s wrap" id="ceremonies">
+    <div class="s-head"><div><div class="eyebrow">The ceremonies</div><h2>Six celebrations, one team</h2>
+      <p>Choose the ceremonies you're celebrating. Each one gets its own guests, decor, menu, music and rituals.</p></div></div>
+    <div class="rail">
+      <div class="cer"><div class="ph has-img illus"><img src="/images/illustrations/haldi.svg" alt="Illustration: brass bowl of turmeric with marigolds" loading="lazy"><span class="mark">Illustration</span></div><div class="n">01</div><h3>Haldi</h3><p>Turmeric for the bride and groom, with marigolds and family close by.</p></div>
+      <div class="cer"><div class="ph has-img"><img src="/images/groom-portrait.jpg" alt="Groom in a cream sherwani and turban" loading="lazy" decoding="async"></div><div class="n">02</div><h3>Pelli Koduku &amp; Kooturu</h3><p>Making the groom and bride, with the priest and fresh flowers.</p></div>
+      <div class="cer"><div class="ph has-img illus"><img src="/images/illustrations/sangeeth.svg" alt="Illustration: dhol drum with music notes" loading="lazy"><span class="mark">Illustration</span></div><div class="n">03</div><h3>Sangeeth</h3><p>Music and dance: stage, lighting, DJ, bar and live counters.</p></div>
+      <div class="cer"><div class="ph has-img"><img src="/images/mehandi-bangles.jpg" alt="Hennaed hands with bangles holding a betel leaf" loading="lazy" decoding="async"></div><div class="n">04</div><h3>Mehandi &amp; Bangles</h3><p>Henna and the gaajulu ceremony, with seating and a photo backdrop.</p></div>
+      <div class="cer"><div class="ph has-img"><img src="/images/bride-mandap.jpg" alt="Bride seated at the mandap" loading="lazy" decoding="async"></div><div class="n">05</div><h3>Pelli &amp; Reception</h3><p>The muhurtham at the mandapam, then the reception for everyone.</p></div>
+      <div class="cer"><div class="ph has-img illus"><img src="/images/illustrations/vratham.svg" alt="Illustration: kalash with mango leaves between two diyas" loading="lazy"><span class="mark">Illustration</span></div><div class="n">06</div><h3>Vratham</h3><p>Satyanarayana Swamy Vratham, with the priest and a veg meal.</p></div>
+    </div>
+  </section>
+
+  <section class="s wrap" id="calendar">
+    <div class="cal-band">
+      <div>
+        <div class="eyebrow">Our calendar</div>
+        <h2>See what we're celebrating</h2>
+        <p>Our public calendar shows the ceremonies we're planning, month by month. Check it to see if your date looks open.</p>
+        <a class="btn gold" href="/calendar/">Open the full calendar</a>
       </div>
-      <div class="menu">
-        <h3>Pelli (Wedding)</h3>
-        <div class="cap">Example menu · dishes chosen with you</div>
-        <ul>
-          <li class="grp">Starters</li>
-          <li><span class="v"></span>Fresh salad</li>
-          <li><span class="nv"></span>2 Non-veg starters</li>
-          <li><span class="v"></span>2 Veg starters</li>
-          <li class="grp">Biryani &amp; curries</li>
-          <li><span class="nv"></span>2 Non-veg biryanis</li>
-          <li><span class="v"></span>Veg biryani</li>
-          <li><span class="nv"></span>Non-veg curry</li>
-          <li><span class="v"></span>Veg curry</li>
-          <li class="grp">Mains</li>
-          <li><span class="v"></span>Roti / Naan</li>
-          <li><span class="v"></span>White rice</li>
-          <li><span class="v"></span>Dal / Rasam / Sambar</li>
-          <li><span class="v"></span>Curd, papad, fryums</li>
-          <li class="grp">For kids</li>
-          <li><span class="v"></span>Veg noodles</li>
-          <li><span class="v"></span>Paneer butter masala</li>
-          <li class="grp">Dessert</li>
-          <li><span class="v"></span>Dessert &amp; ice cream</li>
-        </ul>
-        <div class="legend"><span><span class="v"></span> Veg</span><span><span class="nv"></span> Non-veg</span></div>
+      <div class="upcoming" id="upcoming" aria-live="polite"><div class="up-empty">Loading our calendar…</div></div>
+    </div>
+  </section>
+
+  <section class="s wrap" id="weddings">
+    <div class="s-head"><div><div class="eyebrow">Real weddings</div><h2>Celebrations we've planned</h2>
+      <p>Stories from the families we've worked with.</p></div></div>
+    <div class="feature">
+      <div class="video" id="video">
+        <button type="button" class="play" id="play" aria-label="Play Prashanth and Tejaswi's wedding film">
+          <span class="disc" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7Z"/></svg></span>
+          <span class="lbl">Watch the wedding film · 11 min</span>
+        </button>
+      </div>
+      <div class="feature-text">
+        <div class="eyebrow">Featured wedding · August 2026</div>
+        <h3>Prashanth &amp; Tejaswi</h3>
+        <p>Three days, three ceremonies. A Telugu wedding we planned from start to finish, from the Haldi to the Pelli.</p>
+        <ol class="days">
+          <li><b>Aug 13</b><span>Haldi</span></li>
+          <li><b>Aug 14</b><span>Pelli Koduku function</span></li>
+          <li><b>Aug 15</b><span>Pelli (Wedding)</span></li>
+        </ol>
+              </div>
+    </div>
+
+    <div class="moments">
+      <figure><img src="/images/couple-portrait.jpg" alt="Bride and groom, cheek to cheek" loading="lazy" decoding="async"></figure>
+      <figure><img src="/images/bride-veil.jpg" alt="Bride looking over a sequinned veil" loading="lazy" decoding="async"></figure>
+      <figure><img src="/images/procession-family.jpg" alt="Family entrance under the canopy" loading="lazy" decoding="async"></figure>
+      <figure><img src="/images/bride-floral.jpg" alt="Bride in a red silk saree before hanging flowers" loading="lazy" decoding="async"></figure>
+      <figure><img src="/images/wedding-curtain.jpg" alt="Hand-painted curtain reading Prashanth weds Tejaswi" loading="lazy" decoding="async"></figure>
+      <figure><img src="/images/ritual-detail.jpg" alt="Ritual detail at the ceremony" loading="lazy" decoding="async"></figure>
+      <figure><img src="/images/floral-backdrop.jpg" alt="Bride and family before the floral backdrop" loading="lazy" decoding="async"></figure>
+      <figure><img src="/images/mandap-ritual.jpg" alt="Priest and families at the mandap" loading="lazy" decoding="async"></figure>
+    </div>
+    <p class="credit" style="margin:12px 0 40px">Moments from Prashanth &amp; Tejaswi's wedding · Photos and film by Soul &amp; Ties</p>
+    <div class="weddings">
+      <article class="wed"><div class="ph has-img illus"><img src="/images/illustrations/wedding-mandap.svg" alt="Illustration: decorated mandap" loading="lazy"><span class="mark">Illustration · photo coming soon</span></div><h3 class="pending">[Couple] · [Month Year]</h3><p class="pending">[City] · [Ceremonies we planned]</p></article>
+      <article class="wed"><div class="ph has-img illus"><img src="/images/illustrations/wedding-garlands.svg" alt="Illustration: two wedding garlands" loading="lazy"><span class="mark">Illustration · photo coming soon</span></div><h3 class="pending">[Couple] · [Month Year]</h3><p class="pending">[City] · [Ceremonies we planned]</p></article>
+      <article class="wed"><div class="ph has-img illus"><img src="/images/illustrations/wedding-talambralu.svg" alt="Illustration: plate of talambralu rice" loading="lazy"><span class="mark">Illustration · photo coming soon</span></div><h3 class="pending">[Couple] · [Month Year]</h3><p class="pending">[City] · [Ceremonies we planned]</p></article>
+    </div>
+  </section>
+
+  <section class="s wrap" id="reviews">
+    <div class="s-head"><div><div class="eyebrow">Loved by families</div><h2>What families say</h2></div></div>
+    <div class="quotes">
+      <figure class="quote" style="margin:0"><blockquote class="pending">[Client testimonial]</blockquote><cite class="pending">[Name] · [Ceremony], [Month Year]</cite></figure>
+      <figure class="quote" style="margin:0"><blockquote class="pending">[Client testimonial]</blockquote><cite class="pending">[Name] · [Ceremony], [Month Year]</cite></figure>
+      <figure class="quote" style="margin:0"><blockquote class="pending">[Client testimonial]</blockquote><cite class="pending">[Name] · [Ceremony], [Month Year]</cite></figure>
+    </div>
+  </section>
+
+  <section class="s wrap" id="about">
+    <div class="about">
+      <div>
+        <div class="eyebrow">About V5</div>
+        <h2>Five familiar faces in the Seattle area</h2>
+        <p>We're five friends who've been planning weddings and celebrations together for the past year. Many of the families we work with already know us from the community.</p>
+        <p>We know how much each ceremony means, from the first turmeric at the Haldi to the Vratham after the wedding, and we plan every one as if it were in our own family.</p>
+        <div class="facts">
+          <div><b>5</b><span>of us, on site<br>every event</span></div>
+          <div><b>1</b><span>year of Seattle<br>celebrations</span></div>
+          <div><b>6</b><span>ceremonies<br>we plan</span></div>
+        </div>
+      </div>
+      <div class="team">
+        <div class="member"><div class="ph has-img illus"><img src="/images/illustrations/team-1.svg" alt="Illustration: team member, photo coming soon" loading="lazy"></div><b class="pending">[Name]</b></div>
+        <div class="member"><div class="ph has-img illus"><img src="/images/illustrations/team-2.svg" alt="Illustration: team member, photo coming soon" loading="lazy"></div><b class="pending">[Name]</b></div>
+        <div class="member"><div class="ph has-img illus"><img src="/images/illustrations/team-3.svg" alt="Illustration: team member, photo coming soon" loading="lazy"></div><b class="pending">[Name]</b></div>
+        <div class="member"><div class="ph has-img illus"><img src="/images/illustrations/team-4.svg" alt="Illustration: team member, photo coming soon" loading="lazy"></div><b class="pending">[Name]</b></div>
+        <div class="member"><div class="ph has-img illus"><img src="/images/illustrations/team-5.svg" alt="Illustration: team member, photo coming soon" loading="lazy"></div><b class="pending">[Name]</b></div>
       </div>
     </div>
   </section>
 
   <section class="s wrap" id="process">
-    <div class="s-head">
-      <div class="eyebrow">How it works</div>
-      <h2>From first form to the last guest</h2>
-    </div>
+    <div class="s-head"><div><div class="eyebrow">How it works</div><h2>From first form to the last guest</h2></div></div>
     <div class="steps">
-      <div class="step"><div class="k">Step 1</div><h3>Intake form</h3><p>Tell us your events, guest counts, food, decor, music, priest, photography and stay needs.</p></div>
-      <div class="step"><div class="k">Step 2</div><h3>Quote</h3><p>We send a clear quote, line by line, for each service.</p></div>
-      <div class="step"><div class="k">Step 3</div><h3>Agreement</h3><p>We agree on menus, vendors and deliverables in writing, so there are no surprises.</p></div>
-      <div class="step"><div class="k">Step 4</div><h3>Event days</h3><p>We run each event on site with our helpers while your family celebrates.</p></div>
+      <div class="step"><div class="k">STEP 1</div><h3>Intake form</h3><p>Tell us your ceremonies, guests, food, decor, music, priest, photography and stay needs.</p></div>
+      <div class="step"><div class="k">STEP 2</div><h3>Your quote</h3><p>We send a clear quote for each service, built around your plans.</p></div>
+      <div class="step"><div class="k">STEP 3</div><h3>Agreement</h3><p>Menus, vendors and deliverables agreed in writing. No surprises.</p></div>
+      <div class="step"><div class="k">STEP 4</div><h3>Event days</h3><p>We run each event on site with our helpers while your family celebrates.</p></div>
     </div>
   </section>
+
+  <div class="wrap">
+    <section class="cta">
+      <div><h2>Planning a wedding?</h2><p>Tell us about your celebration and we'll send you a quote.</p></div>
+      <div class="actions"><a class="btn gold" href="/intake/">Request a quote</a><a class="btn outline" href="tel:+14255031212">Call (425) 503-1212</a></div>
+    </section>
+  </div>
 </main>
 
-<section class="close">
+<footer class="site-footer">
+  <div class="toran" aria-hidden="true"></div>
   <div class="wrap">
     <div>
-      <h2>Planning a wedding?</h2>
-      <p>The intake form takes about ten minutes. We'll come back to you with a quote.</p>
+      <a class="logo" href="/"><img src="/assets/logo-light.svg" alt="V5 Events" width="430" height="120"></a>
+      <p style="margin:0;max-width:22em">Indian and Telugu wedding planning across the Seattle area.</p>
     </div>
-    <a class="btn gold" href="/intake/">Start the intake form</a>
+    <div><h3>Services</h3><ul><li><a href="#services">Food &amp; catering</a></li><li><a href="#services">Decor</a></li><li><a href="#services">Photography</a></li><li><a href="#services">Garlands &amp; rentals</a></li><li><a href="#services">Guest accommodation</a></li></ul></div>
+    <div><h3>Plan</h3><ul><li><a href="/intake/">Request a quote</a></li><li><a href="/calendar/">Our calendar</a></li><li><a href="#ceremonies">Ceremonies</a></li><li><a href="#about">About us</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li><a href="tel:+14255031212">(425) 503-1212</a></li><li>Call or WhatsApp</li><li>Seattle area, WA</li></ul></div>
+    <div class="legal"><span>© <span data-year>2026</span> V5 Events</span><span>Every ceremony, beautifully planned.</span></div>
   </div>
-</section>
-
-<footer class="wrap">
-  <span>© 2026 V5 Event Management</span>
-  <span>Telugu weddings, planned end to end</span>
 </footer>
+
+<script src="/assets/site.js"></script>
+<script>
+// Upcoming entries from the public calendar.
+(async () => {
+  const box = document.getElementById("upcoming");
+  try {
+    const data = await V5.loadCalendar();
+    const today = V5.today(), thisMonth = today.slice(0, 7);
+    const items = [];
+    for (const c of data.celebrations) {
+      if (c.days && c.days.length) {
+        const next = c.days.filter((d) => d.date >= today).sort((a, b) => a.date.localeCompare(b.date));
+        if (next.length) items.push({ key: next[0].date, day: next[0].date.slice(8), mon: V5.fmtDate(next[0].date, { month: "short" }), c, ceremonies: next.map((d) => d.ceremony) });
+      } else if (c.month && c.month >= thisMonth) {
+        items.push({ key: c.month + "-99", day: "TBC", mon: V5.fmtDate(c.month + "-01", { month: "short", year: "numeric" }), c, ceremonies: c.ceremonies || [] });
+      }
+    }
+    items.sort((a, b) => a.key.localeCompare(b.key));
+    if (!items.length) { box.innerHTML = '<div class="up-empty">No upcoming celebrations listed yet. Your date could be the first.</div>'; return; }
+    box.innerHTML = "";
+    for (const it of items.slice(0, 3)) {
+      const row = document.createElement("a");
+      row.className = "up"; row.href = "/calendar/"; row.style.textDecoration = "none";
+      row.innerHTML = `<div class="when"><b></b><span></span></div><div><h3></h3><div class="chips"></div></div>`;
+      row.querySelector(".when b").textContent = it.day;
+      row.querySelector(".when span").textContent = it.mon;
+      row.querySelector("h3").textContent = it.c.title + (it.c.area ? " · " + it.c.area : "");
+      for (const name of [...new Set(it.ceremonies)]) {
+        const chip = document.createElement("span");
+        chip.className = "chip"; chip.innerHTML = "<i></i>";
+        chip.querySelector("i").style.background = V5.color(name);
+        chip.append(name);
+        row.querySelector(".chips").append(chip);
+      }
+      box.append(row);
+    }
+  } catch (_) {
+    box.innerHTML = '<div class="up-empty">Our calendar could not load. <a href="/calendar/" style="color:#f2c14e">Open it here</a>.</div>';
+  }
+})();
+</script>
+<script>
+// Load the Google Drive player only when someone presses play.
+document.getElementById("play").addEventListener("click", () => {
+  const f = document.createElement("iframe");
+  f.src = "https://drive.google.com/file/d/1L2fjKta7ThRW0TLGe5hbADsQi9Obu1YQ/preview";
+  f.title = "Prashanth and Tejaswi wedding film, August 2026";
+  f.allow = "autoplay; fullscreen";
+  f.allowFullscreen = true;
+  document.getElementById("video").replaceChildren(f);
+});
+</script>
 </body>
 </html>

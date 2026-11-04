@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Our Calendar · V5 Events</title>
+<meta name="description" content="The V5 Events public calendar: the Indian wedding ceremonies we're planning across the Seattle area, month by month. Check whether your date looks open.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Hind:wght@400;500;600&family=Martel+Sans:wght@600;700;800&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+/* Calendar: header with live counts, a month grid with ceremony chips, a side panel for the
+   selected day and "check your date", then an agenda list of everything upcoming. */
+.cal-hero { background: var(--blush); padding-block: 48px 40px; }
+.cal-hero h1 { font: 600 clamp(44px, 6vw, 72px)/1 var(--display); margin: 12px 0 12px; }
+.cal-hero p { color: var(--muted); margin: 0; max-width: 40em; }
+.stats { display: flex; gap: 14px; margin-top: 26px; flex-wrap: wrap; }
+.stat { background: #fff; border-radius: 16px; padding: 14px 20px; min-width: 150px; }
+.stat b { display: block; font: 800 32px/1 var(--label); color: var(--kumkum); font-variant-numeric: tabular-nums; }
+.stat span { font: 700 12px/1.3 var(--label); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+
+.cal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 28px; padding-block: 36px 0; align-items: start; }
+.month { border: 1px solid var(--line); border-radius: 22px; overflow: hidden; background: #fff; }
+.month-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 18px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.month-head h2 { margin: 0; font: 600 32px/1 var(--display); min-width: 9ch; }
+.nav-btns { display: flex; gap: 8px; }
+.icon-btn { width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid var(--line); background: #fff; cursor: pointer; font: 700 18px/1 var(--label); color: var(--ink); }
+.icon-btn:hover { border-color: var(--ink); }
+.grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+.dow { font: 800 11px/1 var(--label); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding: 12px 10px; text-align: left; border-bottom: 1px solid var(--line); }
+.day { min-height: 108px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 8px; display: flex; flex-direction: column; gap: 4px; background: #fff; text-align: left; font: inherit; color: inherit; cursor: pointer; border-top: 0; border-left: 0; }
+.day:nth-child(7n) { border-right: 0; }
+.day.out { background: #fcfaf8; color: #b9aaa6; cursor: default; }
+.day .num { font: 700 14px/1 var(--label); width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; }
+.day.today .num { background: var(--ink); color: #fff; }
+.day.sel { outline: 2px solid var(--haldi); outline-offset: -2px; background: #fffbf0; }
+.day.past:not(.out) .num { color: #a8928d; }
+.ev { font: 600 11.5px/1.25 var(--label); padding: 4px 6px; border-radius: 6px; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tbc { padding: 14px 18px; border-top: 1px solid var(--line); display: grid; gap: 8px; background: var(--blush); }
+.tbc h3 { margin: 0; font: 800 11px/1 var(--label); letter-spacing: .12em; text-transform: uppercase; color: var(--kumkum); }
+.tbc-item { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; font-size: 15px; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 16px; padding: 14px 18px; border-top: 1px solid var(--line); font-size: 13.5px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i, .chip i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+
+.panel { display: grid; gap: 18px; position: sticky; top: 90px; }
+.card { border: 1px solid var(--line); border-radius: 22px; padding: 22px; background: #fff; display: grid; gap: 12px; }
+.card h2 { margin: 0; font: 600 28px/1.1 var(--display); }
+.card p { margin: 0; color: var(--muted); font-size: 15px; }
+.card label { display: grid; gap: 6px; font: 700 13px/1 var(--label); }
+.card input[type=date] { font: 16px/1.4 var(--body); padding: 11px 12px; border: 1px solid var(--line); border-radius: 10px; width: 100%; color: var(--ink); }
+.result { border-radius: 14px; padding: 14px; font-size: 15px; display: grid; gap: 10px; }
+.result.open { background: #e8f3ea; }
+.result.busy { background: #fbeaea; }
+.result.maybe { background: var(--cream); }
+.result b { font-family: var(--label); }
+.chip { display: inline-flex; align-items: center; gap: 6px; font: 600 12.5px/1 var(--label); padding: 6px 10px; border-radius: 999px; background: var(--blush); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.day-list { display: grid; gap: 10px; }
+.day-item { border-left: 4px solid; padding: 4px 0 4px 12px; }
+.day-item b { display: block; font: 700 15px/1.3 var(--label); }
+.day-item span { font-size: 14px; color: var(--muted); }
+
+.agenda { padding-block: 56px 0; }
+.agenda h2 { font: 600 clamp(32px, 4vw, 44px)/1.05 var(--display); margin: 0 0 18px; }
+.ag-list { display: grid; gap: 12px; }
+.ag { display: grid; grid-template-columns: 110px minmax(0, 1fr) auto; gap: 20px; align-items: center; border: 1px solid var(--line); border-radius: 18px; padding: 16px 20px; }
+.ag .when b { display: block; font: 800 26px/1 var(--label); }
+.ag .when span { font: 800 11px/1.2 var(--label); letter-spacing: .12em; text-transform: uppercase; color: var(--kumkum); }
+.ag h3 { margin: 0 0 6px; font: 700 17px/1.3 var(--label); }
+.status { font: 800 11px/1 var(--label); letter-spacing: .1em; text-transform: uppercase; padding: 7px 10px; border-radius: 999px; background: var(--cream); white-space: nowrap; }
+.status.done { background: #e8f3ea; color: var(--leaf); }
+.empty { border: 1px dashed var(--line); border-radius: 18px; padding: 28px; text-align: center; color: var(--muted); }
+.privacy { margin-top: 18px; font-size: 14px; color: var(--muted); }
+
+@media (max-width: 1000px) {
+  .cal-layout { grid-template-columns: minmax(0, 1fr); }
+  .panel { position: static; }
+}
+@media (max-width: 640px) {
+  .day { min-height: 64px; padding: 4px; }
+  .ev { font-size: 0; padding: 0; height: 6px; border-radius: 3px; }
+  .dow { padding: 10px 4px; font-size: 10px; letter-spacing: .04em; }
+  .ag { grid-template-columns: 80px minmax(0, 1fr); }
+  .ag .status { grid-column: 2; justify-self: start; }
+}
+</style>
+</head>
+<body>
+
+<div class="utility"><div class="wrap">
+  <span>Indian weddings across the Seattle area</span>
+  <span>Call or WhatsApp <a href="tel:+14255031212">(425) 503-1212</a></span>
+</div></div>
+
+<header class="site-header">
+  <div class="wrap" style="position:relative">
+    <a class="logo" href="/" aria-label="V5 Events home"><img src="/assets/logo.svg" alt="V5 Events · Event Management · Seattle" width="430" height="120"></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+    <nav class="menu" id="menu" aria-label="Main">
+      <a href="/#services">Services</a>
+      <a href="/#ceremonies">Ceremonies</a>
+      <a href="/calendar/" aria-current="page">Calendar</a>
+      <a href="/#weddings">Our weddings</a>
+      <a href="/#about">About</a>
+      <a class="btn primary small" href="/intake/">Request a quote</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="cal-hero">
+    <div class="wrap">
+      <div class="eyebrow">Our calendar</div>
+      <h1>Celebrations we're planning</h1>
+      <p>Every Haldi, Sangeeth, Pelli and Vratham on our books, month by month. Pick a day to see what's on, or check whether your date looks open.</p>
+      <div class="stats" aria-live="polite">
+        <div class="stat"><b id="s-upcoming">–</b><span>Upcoming celebrations</span></div>
+        <div class="stat"><b id="s-ceremonies">–</b><span>Ceremonies ahead</span></div>
+        <div class="stat"><b id="s-done">–</b><span>Celebrations completed</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap cal-layout">
+    <div class="month">
+      <div class="month-head">
+        <h2 id="m-title">Month</h2>
+        <div class="nav-btns">
+          <button class="icon-btn" id="prev" type="button" aria-label="Previous month">‹</button>
+          <button class="btn outline small" id="today-btn" type="button">Today</button>
+          <button class="icon-btn" id="next" type="button" aria-label="Next month">›</button>
+        </div>
+      </div>
+      <div class="grid" id="grid" role="grid" aria-labelledby="m-title"></div>
+      <div class="tbc" id="tbc" hidden><h3>This month · dates to be confirmed</h3><div id="tbc-list"></div></div>
+      <div class="legend" id="legend"></div>
+    </div>
+
+    <aside class="panel">
+      <div class="card">
+        <h2>Check your date</h2>
+        <p>See whether we already have a celebration on your wedding date.</p>
+        <label for="check">Your date<input type="date" id="check"></label>
+        <div class="result" id="result" hidden aria-live="polite"></div>
+      </div>
+      <div class="card">
+        <h2 id="d-title">Pick a day</h2>
+        <div class="day-list" id="d-list"><p>Select a day on the calendar to see its ceremonies.</p></div>
+      </div>
+    </aside>
+  </div>
+
+  <section class="wrap agenda">
+    <h2>Coming up</h2>
+    <div class="ag-list" id="agenda"><div class="empty">Loading our calendar…</div></div>
+    <p class="privacy">We only show ceremony types and the general area. Family names and venues stay private.</p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="toran" aria-hidden="true"></div>
+  <div class="wrap">
+    <div>
+      <a class="logo" href="/"><img src="/assets/logo-light.svg" alt="V5 Events" width="430" height="120"></a>
+      <p style="margin:0;max-width:22em">Indian and Telugu wedding planning across the Seattle area.</p>
+    </div>
+    <div><h3>Services</h3><ul><li><a href="/#services">Food &amp; catering</a></li><li><a href="/#services">Decor</a></li><li><a href="/#services">Photography</a></li><li><a href="/#services">Garlands &amp; rentals</a></li><li><a href="/#services">Guest accommodation</a></li></ul></div>
+    <div><h3>Plan</h3><ul><li><a href="/intake/">Request a quote</a></li><li><a href="/calendar/">Our calendar</a></li><li><a href="/#ceremonies">Ceremonies</a></li><li><a href="/#about">About us</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li><a href="tel:+14255031212">(425) 503-1212</a></li><li>Call or WhatsApp</li><li>Seattle area, WA</li></ul></div>
+    <div class="legal"><span>© <span data-year>2026</span> V5 Events</span><span>Every ceremony, beautifully planned.</span></div>
+  </div>
+</footer>
+
+<script src="/assets/site.js"></script>
+<script>
+const $ = (id) => document.getElementById(id);
+const DOW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+let byDate = {}, byMonth = {}, celebrations = [];
+const today = V5.today();
+let view = { y: +today.slice(0, 4), m: +today.slice(5, 7) - 1 };
+let selected = null;
+
+const iso = (y, m, d) => `${y}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+const chip = (name) => { const c = document.createElement("span"); c.className = "chip"; const i = document.createElement("i"); i.style.background = V5.color(name); c.append(i, name); return c; };
+
+function index(data) {
+  celebrations = data.celebrations || [];
+  byDate = {}; byMonth = {};
+  for (const c of celebrations) {
+    if (c.days && c.days.length) {
+      for (const d of c.days) (byDate[d.date] ??= []).push({ c, ceremony: d.ceremony });
+    } else if (c.month) (byMonth[c.month] ??= []).push(c);
+  }
+  // Open on the first month that has something, if this month is empty.
+  const firstAhead = [...Object.keys(byDate), ...Object.keys(byMonth).map((m) => m + "-01")].filter((k) => k.slice(0, 7) >= today.slice(0, 7)).sort()[0];
+  if (firstAhead && !Object.keys(byDate).some((k) => k.startsWith(today.slice(0, 7))) && !byMonth[today.slice(0, 7)]) {
+    view = { y: +firstAhead.slice(0, 4), m: +firstAhead.slice(5, 7) - 1 };
+  }
+}
+
+function stats() {
+  let upcoming = 0, ceremoniesAhead = 0, done = 0;
+  for (const c of celebrations) {
+    const dates = (c.days || []).map((d) => d.date);
+    const isPast = dates.length ? dates.every((d) => d < today) : (c.month && c.month < today.slice(0, 7));
+    if (c.status === "completed" || isPast) done++;
+    else { upcoming++; ceremoniesAhead += dates.length ? dates.filter((d) => d >= today).length : (c.ceremonies || []).length; }
+  }
+  $("s-upcoming").textContent = upcoming; $("s-ceremonies").textContent = ceremoniesAhead; $("s-done").textContent = done;
+}
+
+function legend() {
+  const seen = new Set(Object.keys(V5.CEREMONIES).filter((n) => n !== "Pelli (Wedding)"));
+  $("legend").replaceChildren(...[...seen].map((n) => { const s = document.createElement("span"); const i = document.createElement("i"); i.style.background = V5.color(n); s.append(i, n); return s; }));
+}
+
+function render() {
+  const { y, m } = view;
+  $("m-title").textContent = new Date(y, m, 1).toLocaleDateString("en-US", { month: "long", year: "numeric" });
+  const grid = $("grid"); grid.replaceChildren();
+  for (const d of DOW) { const h = document.createElement("div"); h.className = "dow"; h.setAttribute("role", "columnheader"); h.textContent = d; grid.append(h); }
+  const first = new Date(y, m, 1).getDay(), days = new Date(y, m + 1, 0).getDate();
+  const cells = Math.ceil((first + days) / 7) * 7;
+  for (let i = 0; i < cells; i++) {
+    const dnum = i - first + 1;
+    const inMonth = dnum >= 1 && dnum <= days;
+    const cell = document.createElement(inMonth ? "button" : "div");
+    cell.className = "day" + (inMonth ? "" : " out");
+    if (!inMonth) { grid.append(cell); continue; }
+    const key = iso(y, m, dnum);
+    cell.type = "button";
+    if (key === today) cell.classList.add("today");
+    if (key < today) cell.classList.add("past");
+    if (key === selected) cell.classList.add("sel");
+    const n = document.createElement("span"); n.className = "num"; n.textContent = dnum; cell.append(n);
+    const evs = byDate[key] || [];
+    for (const e of evs.slice(0, 3)) { const t = document.createElement("span"); t.className = "ev"; t.style.background = V5.color(e.ceremony); t.textContent = e.ceremony; cell.append(t); }
+    if (evs.length > 3) { const more = document.createElement("span"); more.className = "ev"; more.style.background = "#6a5558"; more.textContent = `+${evs.length - 3} more`; cell.append(more); }
+    cell.setAttribute("aria-label", V5.fmtDate(key, { weekday: "long", month: "long", day: "numeric" }) + (evs.length ? `, ${evs.length} ceremon${evs.length > 1 ? "ies" : "y"}` : ", nothing booked"));
+    cell.addEventListener("click", () => { selected = key; render(); showDay(key); });
+    grid.append(cell);
+  }
+  const tbc = byMonth[iso(y, m, 1).slice(0, 7)] || [];
+  $("tbc").hidden = !tbc.length;
+  $("tbc-list").replaceChildren(...tbc.map((c) => {
+    const row = document.createElement("div"); row.className = "tbc-item";
+    const b = document.createElement("b"); b.textContent = c.title + (c.area ? " · " + c.area : "");
+    const chips = document.createElement("div"); chips.className = "chips"; chips.append(...(c.ceremonies || []).map(chip));
+    row.append(b, chips); return row;
+  }));
+}
+
+function showDay(key) {
+  $("d-title").textContent = V5.fmtDate(key, { weekday: "long", month: "long", day: "numeric" });
+  const evs = byDate[key] || [];
+  const tbc = byMonth[key.slice(0, 7)] || [];
+  if (!evs.length) {
+    const p = document.createElement("p");
+    p.textContent = tbc.length ? "No confirmed ceremonies this day. This month also has a celebration with dates still to be confirmed." : "Nothing on our calendar this day.";
+    $("d-list").replaceChildren(p); return;
+  }
+  $("d-list").replaceChildren(...evs.map((e) => {
+    const it = document.createElement("div"); it.className = "day-item"; it.style.borderColor = V5.color(e.ceremony);
+    const b = document.createElement("b"); b.textContent = e.ceremony;
+    const s = document.createElement("span"); s.textContent = e.c.title + (e.c.area ? " · " + e.c.area : "");
+    it.append(b, s); return it;
+  }));
+}
+
+function check(key) {
+  const r = $("result"); r.hidden = false;
+  const evs = byDate[key] || [], tbc = byMonth[key.slice(0, 7)] || [];
+  const nice = V5.fmtDate(key, { weekday: "long", month: "long", day: "numeric", year: "numeric" });
+  const cta = document.createElement("a"); cta.className = "btn primary small"; cta.href = "/intake/?date=" + key; cta.textContent = "Request a quote for this date";
+  const msg = document.createElement("div");
+  if (key < today) { r.className = "result maybe"; msg.textContent = `${nice} has already passed. Pick an upcoming date.`; r.replaceChildren(msg); return; }
+  if (evs.length) { r.className = "result busy"; msg.innerHTML = "<b>We have a celebration that day.</b> "; msg.append(`Our team may still be able to help, so ask us about ${nice}.`); }
+  else if (tbc.length) { r.className = "result maybe"; msg.innerHTML = "<b>Looks open, but check with us.</b> "; msg.append("We have a celebration that month with dates still being confirmed."); }
+  else { r.className = "result open"; msg.innerHTML = "<b>Looks open!</b> "; msg.append(`Nothing is on our calendar for ${nice} yet.`); }
+  r.replaceChildren(msg, cta);
+  view = { y: +key.slice(0, 4), m: +key.slice(5, 7) - 1 }; selected = key; render(); showDay(key);
+}
+
+function agenda() {
+  const items = [];
+  for (const c of celebrations) {
+    const dates = (c.days || []).filter((d) => d.date >= today).sort((a, b) => a.date.localeCompare(b.date));
+    if (dates.length) items.push({ key: dates[0].date, big: V5.fmtDate(dates[0].date, { day: "numeric" }), small: V5.fmtDate(dates[0].date, { month: "short", year: "numeric" }), c, cer: dates.map((d) => d.ceremony) });
+    else if (!(c.days && c.days.length) && c.month && c.month >= today.slice(0, 7)) items.push({ key: c.month + "-99", big: V5.fmtDate(c.month + "-01", { month: "short" }), small: c.month.slice(0, 4) + " · dates TBC", c, cer: c.ceremonies || [] });
+  }
+  items.sort((a, b) => a.key.localeCompare(b.key));
+  if (!items.length) { $("agenda").innerHTML = '<div class="empty">Nothing upcoming on our calendar yet. Your celebration could be the first.</div>'; return; }
+  $("agenda").replaceChildren(...items.map((it) => {
+    const row = document.createElement("article"); row.className = "ag";
+    const w = document.createElement("div"); w.className = "when";
+    const b = document.createElement("b"); b.textContent = it.big; const s = document.createElement("span"); s.textContent = it.small; w.append(b, s);
+    const mid = document.createElement("div"); const h = document.createElement("h3"); h.textContent = it.c.title + (it.c.area ? " · " + it.c.area : "");
+    const chips = document.createElement("div"); chips.className = "chips"; chips.append(...[...new Set(it.cer)].map(chip)); mid.append(h, chips);
+    const st = document.createElement("span"); st.className = "status" + (it.c.status === "completed" ? " done" : ""); st.textContent = it.c.status === "completed" ? "Completed" : "Booked";
+    row.append(w, mid, st); return row;
+  }));
+}
+
+$("prev").addEventListener("click", () => { view.m--; if (view.m < 0) { view.m = 11; view.y--; } render(); });
+$("next").addEventListener("click", () => { view.m++; if (view.m > 11) { view.m = 0; view.y++; } render(); });
+$("today-btn").addEventListener("click", () => { view = { y: +today.slice(0, 4), m: +today.slice(5, 7) - 1 }; render(); });
+$("check").addEventListener("change", (e) => { if (e.target.value) check(e.target.value); });
+
+legend();
+render();
+V5.loadCalendar().then((data) => { index(data); stats(); render(); agenda(); }).catch(() => {
+  $("agenda").innerHTML = '<div class="empty">Our calendar could not load. Please refresh the page.</div>';
+});
+</script>
+</body>
+</html>
