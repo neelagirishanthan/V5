@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Tell V5 Event Management about your wedding: events, guest counts, decor, food, bar, DJ, priest, photography and accommodation.">
-<title>Wedding Intake · V5 Event Management</title>
+<title>Wedding Intake · V5 Events</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Hind:wght@400;500;600&family=Martel+Sans:wght@600;700&display=swap">
 <style>
@@ -146,7 +147,8 @@ input:focus-visible, textarea:focus-visible, select:focus-visible, button:focus-
 
 <div class="wrap">
   <header class="hero">
-    <div class="eyebrow"><a href="/" style="color:inherit">V5 Event Management</a> · Customer intake</div>
+    <a href="/" aria-label="V5 Events home"><img src="/assets/logo.svg" alt="V5 Events" width="430" height="120" style="height:56px;width:auto;margin-bottom:8px"></a>
+    <div class="eyebrow">Customer intake</div>
     <h1>Tell us about your wedding<span class="dot">.</span></h1>
     <p class="lede">Pick the ceremonies you are celebrating and answer a few questions for each one. We use this to plan decor, food, bar, music, the priest and photography. You can come back and change your answers any time.</p>
     <div class="border-band" aria-hidden="true"></div>
@@ -379,6 +381,18 @@ function setStatus(msg, kind) { const s = $("status"); s.textContent = msg; s.cl
 fillForm(defaults());
 const draft = loadDraft();
 if (draft) fillForm(draft);
+// Prefill from the home page planner or the calendar: ?events=haldi,pelli&guests=250&date=2027-02-14
+(() => {
+  const q = new URLSearchParams(location.search);
+  if (![...q.keys()].length) return;
+  const ids = (q.get("events") || "").split(",").filter((id) => EVENTS.some((e) => e.id === id));
+  const guests = q.get("guests"), date = q.get("date");
+  const ev = {};
+  for (const id of ids.length ? ids : []) ev[id] = { on: true };
+  if (date) for (const e of EVENTS) if (!ids.length || ids.includes(e.id)) (ev[e.id] ??= {}).date = date;
+  if (guests) for (const id of ids) ev[id].guests = Number(guests);
+  fillForm({ ev });
+})();
 refresh();
 
 let draftTimer;

@@ -1,0 +1,15 @@
+{
+  "_how_to_edit": "Add one entry per celebration. Use 'days' with exact dates when they are confirmed; until then set 'month' (YYYY-MM) and leave 'days' empty. Ceremony names must match the site's list: Haldi, Pelli Koduku & Kooturu, Sangeeth, Mehandi & Bangles, Pelli & Reception, Pelli (Wedding), Vratham. Never put client names here unless the client has agreed.",
+  "updated": "2026-11-04",
+  "celebrations": [
+    {
+      "id": "feb-2027-wedding",
+      "title": "Indian wedding",
+      "month": "2027-02",
+      "area": "",
+      "status": "booked",
+      "ceremonies": ["Haldi", "Pelli Koduku & Kooturu", "Pelli (Wedding)"],
+      "days": []
+    }
+  ]
+}
