@@ -1,0 +1,469 @@
+<title>Event V5 Wedding Intake</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Hind:wght@400;500;600&family=Martel+Sans:wght@600;700&display=swap">
+<style>
+/* Layout: a single-column intake sheet; a sticky tally strip on top, then couple details, one card per ceremony, stay, notes. */
+:root {
+  --paper: #fbfaf7;
+  --surface: #ffffff;
+  --ink: #2a1418;
+  --muted: #6f5a5d;
+  --line: #e6dcd6;
+  --kumkum: #9b1c2c;
+  --kumkum-soft: #f6e4e4;
+  --haldi: #e3a514;
+  --haldi-soft: #fdf3d6;
+  --leaf: #2f6b3a;
+  --leaf-soft: #e3f0e4;
+  --danger: #b3261e;
+  --display: "Rozha One", "Georgia", serif;
+  --body: "Hind", "Segoe UI", system-ui, sans-serif;
+  --label: "Martel Sans", "Hind", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #170d0f; --surface: #22161a; --ink: #f4e9e4; --muted: #b8a39f; --line: #3a2a2d;
+    --kumkum: #e8707e; --kumkum-soft: #3a1d22; --haldi: #f2c14e; --haldi-soft: #3a2f14;
+    --leaf: #7cc58a; --leaf-soft: #1c3020; --danger: #ff8a80; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #170d0f; --surface: #22161a; --ink: #f4e9e4; --muted: #b8a39f; --line: #3a2a2d;
+  --kumkum: #e8707e; --kumkum-soft: #3a1d22; --haldi: #f2c14e; --haldi-soft: #3a2f14;
+  --leaf: #7cc58a; --leaf-soft: #1c3020; --danger: #ff8a80; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font: 16px/1.55 var(--body); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
+.wrap { max-width: 860px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 64px; }
+
+header.hero { padding-block: 36px 20px; display: grid; gap: 8px; }
+.eyebrow { font: 700 12px/1 var(--label); letter-spacing: .12em; text-transform: uppercase; color: var(--kumkum); }
+h1 { font: 400 clamp(32px, 6vw, 48px)/1.05 var(--display); margin: 0; text-wrap: balance; }
+h1 .dot { color: var(--haldi); }
+.lede { margin: 0; color: var(--muted); max-width: 60ch; }
+.border-band { height: 10px; margin-top: 12px; background:
+  repeating-linear-gradient(90deg, var(--haldi) 0 14px, transparent 14px 18px, var(--kumkum) 18px 26px, transparent 26px 30px, var(--leaf) 30px 36px, transparent 36px 40px); opacity: .85; border-radius: 2px; }
+
+.tally { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--surface); border-bottom: 1px solid var(--line); }
+.tally .wrap { padding-block: 10px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.stat { display: grid; gap: 2px; min-width: 0; }
+.stat b { font: 400 24px/1 var(--display); font-variant-numeric: tabular-nums; color: var(--kumkum); }
+.stat span { font: 600 11px/1.2 var(--label); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+
+.tabs { display: flex; gap: 8px; padding-block: 16px 0; flex-wrap: wrap; }
+.tab { font: 600 14px/1 var(--label); padding: 10px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+.tab[aria-selected="true"] { background: var(--kumkum); border-color: var(--kumkum); color: var(--paper); }
+
+section.block { display: grid; gap: 16px; padding-block: 28px 8px; }
+h2 { font: 400 26px/1.15 var(--display); margin: 0; text-wrap: balance; }
+h2 small { display: block; font: 400 15px/1.4 var(--body); color: var(--muted); margin-top: 4px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field > span, .qlabel { font: 600 13px/1.3 var(--label); color: var(--ink); }
+.qlabel em { font-style: normal; color: var(--muted); font-weight: 600; }
+input[type=text], input[type=tel], input[type=email], input[type=date], input[type=number], textarea, select {
+  width: 100%; font: 16px/1.4 var(--body); color: var(--ink); background: var(--surface);
+  border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+textarea { min-height: 72px; resize: vertical; }
+input:focus-visible, textarea:focus-visible, select:focus-visible, button:focus-visible, .chip input:focus-visible + span, .seg input:focus-visible + span, .switch input:focus-visible + span {
+  outline: 2px solid var(--haldi); outline-offset: 2px; }
+
+.event { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.event.on { border-color: var(--haldi); }
+.event-head { display: flex; align-items: center; gap: 14px; padding: 16px; cursor: pointer; }
+.event-head .num { font: 400 22px/1 var(--display); color: var(--haldi); width: 28px; flex: none; text-align: center; }
+.event-head .t { flex: 1; min-width: 0; }
+.event-head h3 { margin: 0; font: 400 21px/1.2 var(--display); }
+.event-head p { margin: 0; color: var(--muted); font-size: 14px; }
+.event-body { padding: 4px 16px 18px; display: grid; gap: 18px; border-top: 1px dashed var(--line); }
+.q { display: grid; gap: 8px; }
+.q-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; }
+
+.switch { display: inline-flex; align-items: center; gap: 8px; font: 600 13px/1 var(--label); color: var(--muted); }
+.switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.switch span { width: 46px; height: 26px; border-radius: 999px; background: var(--line); position: relative; transition: background .15s; flex: none; }
+.switch span::after { content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: var(--surface); transition: transform .15s; }
+.switch input:checked + span { background: var(--leaf); }
+.switch input:checked + span::after { transform: translateX(20px); }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { position: relative; }
+.chip input { position: absolute; opacity: 0; inset: 0; }
+.chip span { display: inline-block; padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line); font-size: 14px; cursor: pointer; background: var(--surface); }
+.chip input:checked + span { background: var(--haldi-soft); border-color: var(--haldi); font-weight: 600; }
+.seg { display: inline-flex; flex-wrap: wrap; gap: 0; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; width: fit-content; max-width: 100%; }
+.seg label { position: relative; }
+.seg input { position: absolute; opacity: 0; inset: 0; }
+.seg span { display: block; padding: 8px 14px; font-size: 14px; cursor: pointer; border-right: 1px solid var(--line); }
+.seg label:last-child span { border-right: 0; }
+.seg input:checked + span { background: var(--kumkum-soft); color: var(--kumkum); font-weight: 600; }
+.veg-dot, .nv-dot { display: inline-block; width: 10px; height: 10px; border: 1.5px solid; margin-right: 6px; vertical-align: 0; position: relative; }
+.veg-dot { border-color: var(--leaf); } .veg-dot::after, .nv-dot::after { content: ""; position: absolute; inset: 1.5px; border-radius: 50%; }
+.veg-dot::after { background: var(--leaf); }
+.nv-dot { border-color: var(--danger); } .nv-dot::after { background: var(--danger); }
+
+.actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding-block: 28px 0; }
+.btn { font: 700 15px/1 var(--label); padding: 14px 20px; border-radius: 10px; border: 1px solid var(--kumkum); background: var(--kumkum); color: var(--paper); cursor: pointer; }
+.btn.ghost { background: transparent; color: var(--kumkum); }
+.btn:disabled { opacity: .5; cursor: default; }
+.status { font-size: 14px; color: var(--muted); }
+.status.ok { color: var(--leaf); } .status.err { color: var(--danger); }
+.hint { font-size: 13px; color: var(--muted); margin: 0; }
+.copybox { width: 100%; min-height: 220px; font: 13px/1.5 ui-monospace, Menlo, Consolas, monospace; }
+
+.sub-list { display: grid; gap: 14px; }
+.sub { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: grid; gap: 10px; }
+.sub h3 { margin: 0; font: 400 20px/1.2 var(--display); }
+.sub .meta { font-size: 13px; color: var(--muted); }
+.sub pre { margin: 0; white-space: pre-wrap; font: 13px/1.5 ui-monospace, Menlo, Consolas, monospace; background: var(--paper); border-radius: 8px; padding: 12px; overflow-x: auto; }
+.pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.pill { font: 600 12px/1 var(--label); padding: 5px 9px; border-radius: 999px; background: var(--haldi-soft); color: var(--ink); }
+.empty { padding: 24px; border: 1px dashed var(--line); border-radius: 12px; color: var(--muted); text-align: center; }
+
+@media (max-width: 560px) {
+  .tally .wrap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stat b { font-size: 20px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="tally" aria-live="polite">
+  <div class="wrap">
+    <div class="stat"><b id="t-events">0</b><span>Events</span></div>
+    <div class="stat"><b id="t-guests">0</b><span>Total guest covers</span></div>
+    <div class="stat"><b id="t-peak">0</b><span>Largest event</span></div>
+    <div class="stat"><b id="t-stay">No</b><span>Guests staying</span></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow">Event V5 Management · Customer intake</div>
+    <h1>Tell us about your wedding<span class="dot">.</span></h1>
+    <p class="lede">Pick the ceremonies you are celebrating and answer a few questions for each one. We use this to plan decor, food, bar, music, the priest and photography. You can come back and change your answers any time.</p>
+    <div class="border-band" aria-hidden="true"></div>
+    <div class="tabs" role="tablist" id="tabs" hidden>
+      <button class="tab" role="tab" id="tab-form" aria-selected="true" type="button">Intake form</button>
+      <button class="tab" role="tab" id="tab-subs" aria-selected="false" type="button">Submissions <span id="sub-count"></span></button>
+    </div>
+  </header>
+
+  <form id="intake" novalidate>
+    <section class="block">
+      <h2>Your details</h2>
+      <div class="grid">
+        <label class="field"><span>Bride's name</span><input type="text" id="c-bride" name="couple.bride" autocomplete="off"></label>
+        <label class="field"><span>Groom's name</span><input type="text" id="c-groom" name="couple.groom" autocomplete="off"></label>
+        <label class="field"><span>Contact person</span><input type="text" id="c-contact" name="couple.contact" autocomplete="name"></label>
+        <label class="field"><span>Phone / WhatsApp</span><input type="tel" id="c-phone" name="couple.phone" autocomplete="tel"></label>
+        <label class="field"><span>Email</span><input type="email" id="c-email" name="couple.email" autocomplete="email"></label>
+        <label class="field"><span>City / venue</span><input type="text" id="c-venue" name="couple.venue"></label>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>Your events<small>Switch on each event you are planning. The count at the top updates as you go.</small></h2>
+      <div id="events" style="display:grid;gap:14px"></div>
+    </section>
+
+    <section class="block">
+      <h2>Guest accommodation<small>Do any guests need a place to stay?</small></h2>
+      <div class="q">
+        <div class="seg" role="radiogroup" aria-label="Accommodation needed">
+          <label><input type="radio" id="acc-yes" name="acc.needed" value="yes"><span>Yes, needed</span></label>
+          <label><input type="radio" id="acc-no" name="acc.needed" value="no"><span>Not needed</span></label>
+        </div>
+      </div>
+      <div class="grid" id="acc-detail">
+        <label class="field"><span>How many guests</span><input type="number" min="0" inputmode="numeric" id="acc-guests" name="acc.guests"></label>
+        <label class="field"><span>Rooms (approx.)</span><input type="number" min="0" inputmode="numeric" id="acc-rooms" name="acc.rooms"></label>
+        <label class="field"><span>Check-in</span><input type="date" id="acc-in" name="acc.checkin"></label>
+        <label class="field"><span>Check-out</span><input type="date" id="acc-out" name="acc.checkout"></label>
+        <label class="field" style="grid-column:1/-1"><span>Stay notes <em class="qlabel"><em>(hotel preference, elders, airport pickup)</em></em></span><textarea id="acc-notes" name="acc.notes"></textarea></label>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>Anything else</h2>
+      <label class="field"><span>Budget range, family traditions, must-haves</span><textarea id="notes" name="notes"></textarea></label>
+    </section>
+
+    <div class="actions">
+      <button class="btn" type="submit" id="submit">Submit intake</button>
+      <button class="btn ghost" type="button" id="copy">Copy summary</button>
+      <span class="status" id="status" role="status"></span>
+    </div>
+    <p class="hint" id="save-hint" style="margin-top:10px">Your answers are kept as a draft in this browser until you submit.</p>
+    <textarea class="copybox" id="copybox" readonly hidden aria-label="Intake summary"></textarea>
+  </form>
+
+  <section class="block" id="subs" hidden>
+    <h2>Submissions<small>Every intake customers have sent through this page, newest first.</small></h2>
+    <div class="sub-list" id="sub-list"><div class="empty">No submissions yet. When a customer submits the form, their answers appear here.</div></div>
+  </section>
+</div>
+
+<script>
+const EVENTS = [
+  { id: "haldi", name: "Haldi", note: "Turmeric ceremony for the bride and groom", priest: false, dj: false },
+  { id: "pellikoduku", name: "Pelli Koduku & Kooturu", note: "Making the groom and bride", priest: true, dj: false },
+  { id: "sangeeth", name: "Sangeeth", note: "Music and dance night", priest: false, dj: true },
+  { id: "mehandi", name: "Mehandi & Bangles", note: "Henna and gaajulu ceremony", priest: false, dj: true },
+  { id: "pelli", name: "Pelli & Reception", note: "Wedding muhurtham and reception", priest: true, dj: true },
+  { id: "vratham", name: "Vratham", note: "Satyanarayana Swamy Vratham", priest: true, dj: false }
+];
+const DECOR = ["Stage / mandapam", "Entrance arch", "Floral decor", "Garlands", "Lighting", "Seating & tables", "Photo booth", "Backdrop / theme", "Rangoli"];
+const COUNTERS = ["Dosa", "Chaat & pani puri", "Jalebi", "Pasta", "Tandoor / BBQ", "Biryani", "Ice cream & paan", "Juice / mocktails"];
+const BAR = ["Full bar", "Beer & wine", "Mocktails only"];
+const PHOTO = ["Photos", "Video", "Candid", "Drone", "Same-day edit"];
+
+const DRAFT_KEY = "ev5-intake-draft";
+const form = document.getElementById("intake");
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function chips(name, values, idBase) {
+  return `<div class="chips">${values.map((v, i) =>
+    `<label class="chip"><input type="checkbox" data-multi id="${idBase}-${i}" name="${name}" value="${esc(v)}"><span>${esc(v)}</span></label>`).join("")}</div>`;
+}
+function seg(name, opts, idBase, label) {
+  return `<div class="seg" role="radiogroup" aria-label="${esc(label)}">${opts.map(([v, t], i) =>
+    `<label><input type="radio" id="${idBase}-${i}" name="${name}" value="${v}"><span>${t}</span></label>`).join("")}</div>`;
+}
+
+$("events").innerHTML = EVENTS.map((e, n) => {
+  const p = `ev.${e.id}`;
+  return `<article class="event" id="card-${e.id}">
+    <div class="event-head" data-toggle="${e.id}">
+      <div class="num">${n + 1}</div>
+      <div class="t"><h3>${esc(e.name)}</h3><p>${esc(e.note)}</p></div>
+      <label class="switch" onclick="event.stopPropagation()"><input type="checkbox" id="on-${e.id}" name="${p}.on" aria-label="Include ${esc(e.name)}"><span></span></label>
+    </div>
+    <div class="event-body" id="body-${e.id}">
+      <div class="q-row">
+        <label class="field"><span>Date</span><input type="date" id="${e.id}-date" name="${p}.date"></label>
+        <label class="field"><span>How many people</span><input type="number" min="0" inputmode="numeric" id="${e.id}-guests" name="${p}.guests" placeholder="e.g. 150"></label>
+      </div>
+      <div class="q"><span class="qlabel">Decor to cover</span>${chips(`${p}.decor`, DECOR, `${e.id}-decor`)}
+        <input type="text" id="${e.id}-decornotes" name="${p}.decorNotes" placeholder="Colours, theme or reference photos"></div>
+      <div class="q"><span class="qlabel">Food preference</span>
+        ${seg(`${p}.food`, [["veg", '<i class="veg-dot"></i>Veg only'], ["nonveg", '<i class="nv-dot"></i>Non-veg only'], ["both", "Both"], ["none", "No food"]], `${e.id}-food`, "Food preference")}
+        <div class="q-row" id="${e.id}-split">
+          <label class="field"><span><i class="veg-dot"></i>Veg guests</span><input type="number" min="0" inputmode="numeric" id="${e.id}-vegn" name="${p}.vegCount"></label>
+          <label class="field"><span><i class="nv-dot"></i>Non-veg guests</span><input type="number" min="0" inputmode="numeric" id="${e.id}-nvn" name="${p}.nonvegCount"></label>
+        </div></div>
+      <div class="q"><span class="qlabel">Live counters</span>${chips(`${p}.counters`, COUNTERS, `${e.id}-ctr`)}</div>
+      <div class="q-row">
+        <div class="q"><span class="qlabel">Alcohol / bartender</span>${seg(`${p}.alcohol`, [["yes", "Yes"], ["no", "No"]], `${e.id}-alc`, "Alcohol")}
+          <div id="${e.id}-bar">${seg(`${p}.bar`, BAR.map((b) => [b, b]), `${e.id}-bar`, "Bar type")}</div></div>
+        <div class="q"><span class="qlabel">DJ needed</span>${seg(`${p}.dj`, [["yes", "Yes"], ["no", "No"]], `${e.id}-dj`, "DJ")}</div>
+        <div class="q"><span class="qlabel">Priest (pantulu garu)</span>${seg(`${p}.priest`, [["yes", "Yes"], ["no", "No"]], `${e.id}-pr`, "Priest")}</div>
+      </div>
+      <div class="q"><span class="qlabel">Photography coverage</span>${chips(`${p}.photo`, PHOTO, `${e.id}-ph`)}</div>
+    </div>
+  </article>`;
+}).join("");
+
+function setPath(o, p, v) { let c = o; for (let i = 0; i < p.length - 1; i++) c = c[p[i]] ??= {}; c[p[p.length - 1]] = v; }
+function getPath(o, p) { return p.reduce((c, k) => (c == null ? undefined : c[k]), o); }
+
+function readForm() {
+  const o = {};
+  for (const el of form.elements) {
+    if (!el.name) continue;
+    const p = el.name.split(".");
+    if (el.type === "checkbox" && "multi" in el.dataset) {
+      const arr = getPath(o, p) || [];
+      if (el.checked) arr.push(el.value);
+      setPath(o, p, arr);
+    } else if (el.type === "checkbox") setPath(o, p, el.checked);
+    else if (el.type === "radio") {
+      if (el.checked) setPath(o, p, el.value);
+      else if (getPath(o, p) === undefined) setPath(o, p, "");
+    } else if (el.type === "number") setPath(o, p, el.value === "" ? null : Number(el.value));
+    else setPath(o, p, el.value.trim());
+  }
+  return o;
+}
+function fillForm(o) {
+  for (const el of form.elements) {
+    if (!el.name) continue;
+    const v = getPath(o, el.name.split("."));
+    if (v === undefined) continue;
+    if (el.type === "checkbox" && "multi" in el.dataset) el.checked = Array.isArray(v) && v.includes(el.value);
+    else if (el.type === "checkbox") el.checked = !!v;
+    else if (el.type === "radio") el.checked = el.value === v;
+    else el.value = v ?? "";
+  }
+}
+// Sensible starting answers: DJ and priest default per ceremony.
+function defaults() {
+  const ev = {};
+  for (const e of EVENTS) ev[e.id] = { on: false, dj: e.dj ? "yes" : "no", priest: e.priest ? "yes" : "no", alcohol: "no", food: "veg" };
+  return { ev, acc: { needed: "no" } };
+}
+
+function chosen(o) { return EVENTS.filter((e) => o.ev?.[e.id]?.on); }
+
+function refresh() {
+  const o = readForm();
+  for (const e of EVENTS) {
+    const d = o.ev[e.id];
+    $("card-" + e.id).classList.toggle("on", d.on);
+    $("body-" + e.id).hidden = !d.on;
+    $(e.id + "-split").hidden = d.food !== "both";
+    $(e.id + "-bar").hidden = d.alcohol !== "yes";
+  }
+  $("acc-detail").hidden = o.acc.needed !== "yes";
+  const evs = chosen(o);
+  const counts = evs.map((e) => o.ev[e.id].guests || 0);
+  $("t-events").textContent = evs.length;
+  $("t-guests").textContent = counts.reduce((a, b) => a + b, 0).toLocaleString();
+  $("t-peak").textContent = Math.max(0, ...counts).toLocaleString();
+  $("t-stay").textContent = o.acc.needed === "yes" ? (o.acc.guests ? o.acc.guests.toLocaleString() : "Yes") : "No";
+  return o;
+}
+
+const FOOD = { veg: "Veg only", nonveg: "Non-veg only", both: "Veg + non-veg", none: "No food" };
+function summary(o) {
+  const c = o.couple || {};
+  const evs = chosen(o);
+  const L = [];
+  L.push(`EVENT V5 WEDDING INTAKE`);
+  L.push(`Couple: ${c.bride || "?"} & ${c.groom || "?"}`);
+  if (c.contact) L.push(`Contact: ${c.contact}`);
+  if (c.phone || c.email) L.push(`Phone / email: ${[c.phone, c.email].filter(Boolean).join(" · ")}`);
+  if (c.venue) L.push(`City / venue: ${c.venue}`);
+  L.push(`Number of events: ${evs.length}`);
+  L.push("");
+  evs.forEach((e, i) => {
+    const d = o.ev[e.id];
+    L.push(`${i + 1}. ${e.name}${d.date ? " — " + d.date : ""}`);
+    L.push(`   People: ${d.guests ?? "not given"}`);
+    L.push(`   Decor: ${d.decor?.length ? d.decor.join(", ") : "none chosen"}${d.decorNotes ? " (" + d.decorNotes + ")" : ""}`);
+    let food = FOOD[d.food] || "not given";
+    if (d.food === "both" && (d.vegCount != null || d.nonvegCount != null)) food += ` (veg ${d.vegCount ?? "?"}, non-veg ${d.nonvegCount ?? "?"})`;
+    L.push(`   Food: ${food}`);
+    L.push(`   Live counters: ${d.counters?.length ? d.counters.join(", ") : "none"}`);
+    L.push(`   Alcohol / bartender: ${d.alcohol === "yes" ? "Yes" + (d.bar ? " — " + d.bar : "") : "No"}`);
+    L.push(`   DJ: ${d.dj === "yes" ? "Yes" : "No"} · Priest: ${d.priest === "yes" ? "Yes" : "No"}`);
+    L.push(`   Photography: ${d.photo?.length ? d.photo.join(", ") : "not needed"}`);
+  });
+  if (!evs.length) L.push("(no events selected yet)");
+  L.push("");
+  const a = o.acc || {};
+  if (a.needed === "yes") {
+    L.push(`Accommodation: needed for ${a.guests ?? "?"} guests, ${a.rooms ?? "?"} rooms`);
+    if (a.checkin || a.checkout) L.push(`   Stay: ${a.checkin || "?"} to ${a.checkout || "?"}`);
+    if (a.notes) L.push(`   Notes: ${a.notes}`);
+  } else L.push("Accommodation: not needed");
+  const by = (k) => evs.filter((e) => o.ev[e.id][k] === "yes").map((e) => e.name).join(", ") || "none";
+  L.push("");
+  L.push(`DJ at: ${by("dj")}`);
+  L.push(`Priest at: ${by("priest")}`);
+  L.push(`Bar at: ${by("alcohol")}`);
+  if (o.notes) { L.push(""); L.push(`Notes: ${o.notes}`); }
+  return L.join("\n");
+}
+
+function saveDraft(o) { try { localStorage.setItem(DRAFT_KEY, JSON.stringify(o)); } catch (_) {} }
+function loadDraft() { try { return JSON.parse(localStorage.getItem(DRAFT_KEY) || "null"); } catch (_) { return null; } }
+
+function setStatus(msg, kind) { const s = $("status"); s.textContent = msg; s.className = "status" + (kind ? " " + kind : ""); }
+
+fillForm(defaults());
+const draft = loadDraft();
+if (draft) fillForm(draft);
+refresh();
+
+let draftTimer;
+form.addEventListener("input", () => { const o = refresh(); clearTimeout(draftTimer); draftTimer = setTimeout(() => saveDraft(o), 400); });
+form.addEventListener("change", () => refresh());
+document.querySelectorAll("[data-toggle]").forEach((h) => h.addEventListener("click", () => {
+  const box = $("on-" + h.dataset.toggle); box.checked = !box.checked; box.dispatchEvent(new Event("input", { bubbles: true }));
+}));
+
+$("copy").addEventListener("click", async () => {
+  const text = summary(refresh());
+  const box = $("copybox");
+  box.value = text;
+  try { await navigator.clipboard.writeText(text); box.hidden = true; setStatus("Summary copied. Paste it into WhatsApp or email.", "ok"); }
+  catch (_) { box.hidden = false; box.focus(); box.select(); setStatus("Select the summary below and copy it.", ""); }
+});
+
+let db = null, me = null;
+form.addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const o = refresh();
+  const c = o.couple;
+  if (!c.bride && !c.groom) { setStatus("Add the bride's or groom's name so we know whose wedding this is.", "err"); $("c-bride").focus(); return; }
+  if (!c.phone && !c.email) { setStatus("Add a phone number or email so we can reach you.", "err"); $("c-phone").focus(); return; }
+  if (!chosen(o).length) { setStatus("Switch on at least one event.", "err"); return; }
+  if (!db || !me) {
+    $("copy").click();
+    setStatus("This page can't save online for you. Copy the summary and send it to us on WhatsApp or email.", "err");
+    return;
+  }
+  $("submit").disabled = true; setStatus("Submitting…");
+  try {
+    await db.collection("intakes").doc(me).set({ ...o, eventCount: chosen(o).length, submittedAt: new Date().toISOString() });
+    setStatus("Submitted. Thank you. You can update your answers and submit again any time.", "ok");
+  } catch (e) {
+    setStatus(e?.code === "invalid_argument"
+      ? "You don't have permission to submit here. Ask us to share this page with you as a Contributor, or copy the summary and send it."
+      : "Submitting failed. Check your connection and try again.", "err");
+  } finally { $("submit").disabled = false; }
+});
+
+function showTab(which) {
+  $("tab-form").setAttribute("aria-selected", which === "form");
+  $("tab-subs").setAttribute("aria-selected", which === "subs");
+  form.hidden = which !== "form";
+  $("subs").hidden = which !== "subs";
+}
+$("tab-form").addEventListener("click", () => showTab("form"));
+$("tab-subs").addEventListener("click", () => showTab("subs"));
+
+function renderSubs(snap) {
+  const docs = snap.docs.filter((d) => d.exists).map((d) => d.data())
+    .sort((a, b) => String(b.submittedAt).localeCompare(String(a.submittedAt)));
+  $("sub-count").textContent = docs.length ? `(${docs.length})` : "";
+  if (!docs.length) { $("sub-list").innerHTML = '<div class="empty">No submissions yet. When a customer submits the form, their answers appear here.</div>'; return; }
+  $("sub-list").innerHTML = docs.map((o) => {
+    const c = o.couple || {};
+    const evs = chosen(o);
+    const total = evs.reduce((a, e) => a + (o.ev[e.id].guests || 0), 0);
+    const when = o.submittedAt ? new Date(o.submittedAt).toLocaleString() : "";
+    return `<article class="sub">
+      <h3>${esc(c.bride || "?")} &amp; ${esc(c.groom || "?")}</h3>
+      <div class="meta">${esc([c.contact, c.phone, c.email].filter(Boolean).join(" · "))}${when ? " · submitted " + esc(when) : ""}</div>
+      <div class="pills"><span class="pill">${evs.length} events</span><span class="pill">${total.toLocaleString()} guest covers</span>
+        <span class="pill">${o.acc?.needed === "yes" ? "Stay for " + esc(o.acc.guests ?? "?") : "No stay"}</span></div>
+      <pre>${esc(summary(o))}</pre>
+    </article>`;
+  }).join("");
+}
+
+(async () => {
+  if (!window.claude?.use) return;
+  const [dbNs, user] = await Promise.all([claude.use("db"), claude.use("user")]);
+  db = dbNs;
+  if (!db || !user) return;
+  me = await user.id();
+  if (me) {
+    try {
+      const snap = await db.collection("intakes").doc(me).get();
+      if (snap.exists && !loadDraft()) { fillForm(snap.data()); refresh(); }
+      if (snap.exists) $("save-hint").textContent = "You've submitted before. Submitting again replaces your earlier answers.";
+    } catch (_) {}
+  }
+  if (await user.canEdit()) {
+    $("tabs").hidden = false;
+    db.collection("intakes").onSnapshot(renderSubs, () => {
+      $("sub-list").innerHTML = '<div class="empty">Submissions could not load. Reload the page to try again.</div>';
+    });
+  }
+})();
+</script>

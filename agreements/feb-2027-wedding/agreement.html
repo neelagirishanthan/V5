@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>V5 Event Management Service Agreement</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Hind:wght@400;500;600;700&family=Martel+Sans:wght@600;700;800&display=swap">
+<style>
+@page { size: A4; margin: 20mm 17mm 18mm; }
+
+:root {
+  --paper: #ffffff; --ink: #2a1418; --muted: #64504f; --line: #ddd0ca; --soft: #faf5f2;
+  --kumkum: #9b1c2c; --kumkum-soft: #f7e6e6; --haldi: #e3a514; --haldi-soft: #fdf3d6; --leaf: #2f6b3a; --nv: #b3261e;
+  --display: "Rozha One", Georgia, serif; --body: "Hind", "Segoe UI", Arial, sans-serif; --label: "Martel Sans", "Hind", Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--paper); color: var(--ink); font: 13.5px/1.6 var(--body); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+.letterhead { background: var(--kumkum); color: #fff; padding: 9mm 8mm 7mm; border-radius: 8px 8px 0 0; display: flex; justify-content: space-between; align-items: flex-end; gap: 10mm; }
+.brand { font: 400 34px/1 var(--display); }
+.brand span { color: #f2c14e; }
+.tagline { font: 800 10px/1 var(--label); letter-spacing: .16em; text-transform: uppercase; color: #f2c14e; margin-top: 8px; }
+.lh-contact { text-align: right; font-size: 12px; line-height: 1.5; color: #f7e6e6; }
+.border { height: 8px; background: repeating-linear-gradient(90deg, var(--haldi) 0 16px, #fff 16px 20px, var(--leaf) 20px 27px, #fff 27px 31px); }
+
+h1 { font: 400 30px/1.1 var(--display); margin: 7mm 0 1mm; color: var(--ink); }
+.sub { color: var(--muted); margin: 0 0 6mm; }
+h2 { font: 400 20px/1.2 var(--display); color: var(--kumkum); margin: 0 0 2.5mm; display: flex; align-items: baseline; gap: 10px; break-after: avoid; }
+h2 .no { font: 800 11px/1 var(--label); color: #fff; background: var(--kumkum); padding: 4px 7px; border-radius: 4px; letter-spacing: .06em; }
+h2 .amt { margin-left: auto; font: 700 14px/1 var(--label); color: var(--ink); font-variant-numeric: tabular-nums; }
+h3 { font: 700 13.5px/1.3 var(--label); margin: 0 0 1.5mm; break-after: avoid; }
+p { margin: 0 0 2.5mm; }
+section { margin-bottom: 7mm; }
+ol.terms { margin: 0; padding-left: 18px; display: grid; gap: 1.6mm; }
+ol.terms li { padding-left: 3px; break-inside: avoid; }
+ol.terms li b { font-weight: 600; }
+.ph { background: var(--haldi-soft); padding: 0 3px; border-radius: 3px; font-weight: 500; }
+
+.parties { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5mm; margin-bottom: 7mm; break-inside: avoid; }
+.party { border: 1px solid var(--line); border-radius: 8px; padding: 4mm 5mm; background: var(--soft); }
+.party .k { font: 800 10px/1 var(--label); letter-spacing: .12em; text-transform: uppercase; color: var(--kumkum); margin-bottom: 2mm; }
+.party div { font-size: 13px; }
+.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5mm; margin-bottom: 6mm; break-inside: avoid; }
+.fact { border-top: 2px solid var(--haldi); padding-top: 2mm; }
+.fact .k { font: 700 10.5px/1.2 var(--label); color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.fact .val { font: 600 14px/1.4 var(--body); }
+
+table { width: 100%; border-collapse: collapse; break-inside: avoid; }
+th, td { border-bottom: 1px solid var(--line); padding: 1.5mm 2mm; text-align: left; vertical-align: top; }
+thead th { font: 700 10.5px/1.2 var(--label); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); border-bottom: 1.5px solid var(--ink); }
+td.r, th.r { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+tfoot td { font: 700 15px/1.2 var(--label); border-bottom: 0; border-top: 1.5px solid var(--ink); padding-top: 3mm; }
+
+.menus { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4mm; margin: 2mm 0 4mm; }
+.menu { border: 1px solid var(--line); border-radius: 8px; padding: 3.5mm 4.5mm; break-inside: avoid; }
+.menu.wide { grid-column: 1 / -1; }
+.menu .hd { display: flex; justify-content: space-between; align-items: baseline; gap: 4mm; border-bottom: 1px dashed var(--line); padding-bottom: 1.5mm; margin-bottom: 2mm; }
+.menu .hd b { font: 400 16px/1.2 var(--display); }
+.menu .hd span { font-size: 11.5px; color: var(--muted); white-space: nowrap; }
+.menu ul { list-style: none; margin: 0; padding: 0; columns: 2; column-gap: 6mm; font-size: 12.5px; line-height: 1.55; }
+.menu.wide ul { columns: 3; }
+.menu li { break-inside: avoid; display: flex; align-items: baseline; gap: 6px; }
+.menu .grp { font: 700 10px/1.4 var(--label); text-transform: uppercase; letter-spacing: .08em; color: var(--kumkum); margin-top: 1.5mm; }
+.menu .grp:first-child { margin-top: 0; }
+.v, .nv { flex: none; display: inline-flex; width: 10px; height: 10px; border: 1.4px solid var(--leaf); align-items: center; justify-content: center; position: relative; top: 1px; }
+.v::after, .nv::after { content: ""; width: 4px; height: 4px; border-radius: 50%; background: var(--leaf); }
+.nv { border-color: var(--nv); } .nv::after { background: var(--nv); }
+.kids { font-size: 10.5px; font-weight: 600; color: var(--muted); }
+.legend { font-size: 11.5px; color: var(--muted); display: flex; gap: 14px; align-items: center; margin-bottom: 3mm; }
+
+.callout { background: var(--haldi-soft); border-radius: 8px; padding: 3.5mm 5mm; margin: 2mm 0 3mm; font-size: 13px; break-inside: avoid; }
+.callout b { font-family: var(--label); }
+
+.sign { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10mm; margin-top: 6mm; break-inside: avoid; }
+.sign .k { font: 800 10px/1 var(--label); letter-spacing: .12em; text-transform: uppercase; color: var(--kumkum); margin-bottom: 9mm; }
+.ln { display: flex; align-items: flex-end; gap: 8px; font: 600 11.5px/1 var(--label); margin-bottom: 7mm; white-space: nowrap; }
+.ln::after { content: ""; flex: 1; border-bottom: 1px solid var(--ink); }
+.page-break { break-before: page; }
+.keep { break-inside: avoid; }
+</style>
+</head>
+<body>
+
+<div class="letterhead">
+  <div>
+    <div class="brand">V5 <span>Event Management</span></div>
+    <div class="tagline">Indian weddings · planned end to end</div>
+  </div>
+  <div class="lh-contact">[YOUR PHONE]<br>[YOUR EMAIL]<br>[YOUR ADDRESS / CITY]</div>
+</div>
+<div class="border"></div>
+
+<h1>Wedding Services Agreement</h1>
+<p class="sub">Agreement no. <span class="ph">[NUMBER]</span> · Date <span class="ph">[DATE]</span></p>
+
+<div class="parties">
+  <div class="party"><div class="k">Service provider</div><div><b>V5 Event Management</b><br>Represented by <span class="ph">[NAME]</span><br><span class="ph">[ADDRESS]</span></div></div>
+  <div class="party"><div class="k">Client</div><div><b><span class="ph">[CLIENT NAME(S)]</span></b><br>On behalf of the wedding of <span class="ph">[BRIDE]</span> &amp; <span class="ph">[GROOM]</span><br><span class="ph">[ADDRESS · PHONE · EMAIL]</span></div></div>
+</div>
+
+<div class="facts">
+  <div class="fact"><div class="k">Wedding dates</div><div class="val"><span class="ph">[DATES]</span> February 2027</div></div>
+  <div class="fact"><div class="k">Venue</div><div class="val"><span class="ph">[VENUE, CITY]</span></div></div>
+  <div class="fact"><div class="k">Events covered</div><div class="val">Haldi · Pelli Koduku &amp; Kooturu · Pelli (Wedding)</div></div>
+</div>
+
+<section>
+  <h2>Purpose of this agreement</h2>
+  <p>This agreement sets out the services V5 Event Management ("V5", "we") will provide for the Client's wedding, what is delivered under each service, the agreed price, and the responsibilities of both sides. It follows the Client's intake form and the quote shared on <span class="ph">[QUOTE DATE]</span>.</p>
+</section>
+
+<section class="keep">
+  <h2>Summary of services and price</h2>
+  <table>
+    <thead><tr><th style="width:8mm">#</th><th>Service</th><th>What it covers</th><th class="r">Amount</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><b>Food</b></td><td>Catering for all three events, as per the agreed menus</td><td class="r">$4,000</td></tr>
+      <tr><td>2</td><td><b>Decor</b></td><td>Event decor through our decor vendor, within budget</td><td class="r">$8,000</td></tr>
+      <tr><td>3</td><td><b>Photography</b></td><td>Photographer from our vendor, finalised by the Client</td><td class="r">$6,000</td></tr>
+      <tr><td>4</td><td><b>Event item rentals</b></td><td>Tables, chairs, linens and event essentials</td><td class="r">$1,000</td></tr>
+      <tr><td>5</td><td><b>Garlands</b></td><td>Fresh flower garlands through our garland vendor</td><td class="r">$1,000</td></tr>
+      <tr><td>6</td><td><b>Grandeur</b></td><td>Grand entrances and special touches</td><td class="r">$4,000</td></tr>
+      <tr><td>7</td><td><b>Accommodation</b></td><td>Guest stay at rental spaces near the event venues</td><td class="r">$12,000</td></tr>
+    </tbody>
+    <tfoot><tr><td></td><td colspan="2">Total agreed price</td><td class="r">$36,000</td></tr></tfoot>
+  </table>
+</section>
+
+<section>
+  <h2><span class="no">1</span>Food<span class="amt">$4,000</span></h2>
+  <p>V5 will arrange catering for each event as per the menus below. Food is prepared fresh on the day of each event and served by our catering team.</p>
+  <div class="legend"><span><span class="v"></span> Veg</span><span><span class="nv"></span> Non-veg</span><span>Where items are separated by "/", one is served (Client's choice).</span></div>
+  <div class="menus">
+    <div class="menu">
+      <div class="hd"><b>Event 1 · Haldi</b><span><span class="ph">[NO.]</span> guests</span></div>
+      <ul>
+        <li><span class="v"></span>1 Veg curry</li>
+        <li><span class="v"></span>1 Veg fry</li>
+        <li><span class="v"></span>1 Flavoured rice</li>
+        <li><span class="v"></span>Dal / Rasam / Sambar</li>
+        <li><span class="v"></span>White rice</li>
+        <li><span class="v"></span>Papad</li>
+        <li><span class="v"></span>Fryums</li>
+        <li><span class="v"></span>Curd</li>
+      </ul>
+    </div>
+    <div class="menu">
+      <div class="hd"><b>Event 2 · Pelli Koduku &amp; Kooturu</b><span><span class="ph">[NO.]</span> guests</span></div>
+      <ul>
+        <li><span class="v"></span>1 Veg curry</li>
+        <li><span class="v"></span>1 Veg fry</li>
+        <li><span class="v"></span>1 Flavoured rice</li>
+        <li><span class="v"></span>Roti</li>
+        <li><span class="v"></span>Dal</li>
+        <li><span class="v"></span>Rasam / Sambar</li>
+        <li><span class="v"></span>White rice</li>
+        <li><span class="v"></span>Papad</li>
+        <li><span class="v"></span>Fryums</li>
+        <li><span class="v"></span>Curd</li>
+      </ul>
+    </div>
+    <div class="menu wide">
+      <div class="hd"><b>Event 3 · Pelli (Wedding)</b><span><span class="ph">[NO.]</span> guests</span></div>
+      <ul>
+        <li class="grp">Starters &amp; salad</li>
+        <li><span class="v"></span>Salad: carrot, cucumber, onion, lemon</li>
+        <li><span class="nv"></span>2 Non-veg starters</li>
+        <li><span class="v"></span>2 Veg starters</li>
+        <li class="grp">Biryani &amp; curries</li>
+        <li><span class="nv"></span>2 Non-veg biryanis</li>
+        <li><span class="v"></span>1 Veg biryani</li>
+        <li><span class="nv"></span>1 Non-veg curry</li>
+        <li><span class="v"></span>1 Veg curry</li>
+        <li class="grp">Mains &amp; sides</li>
+        <li><span class="v"></span>Roti / Naan</li>
+        <li><span class="v"></span>White rice</li>
+        <li><span class="v"></span>Dal / Rasam / Sambar</li>
+        <li><span class="v"></span>Curd</li>
+        <li><span class="v"></span>Papad</li>
+        <li><span class="v"></span>Fryums</li>
+        <li class="grp">For kids</li>
+        <li><span class="v"></span>Veg noodles <span class="kids">KIDS</span></li>
+        <li><span class="v"></span>Paneer butter masala <span class="kids">KIDS</span></li>
+        <li class="grp">Dessert</li>
+        <li><span class="v"></span>1 Dessert</li>
+        <li><span class="v"></span>Ice cream</li>
+      </ul>
+    </div>
+  </div>
+  <ol class="terms">
+    <li>The Client will confirm the exact dishes (which curry, fry, flavoured rice, starters, biryanis and dessert) at least <span class="ph">[14]</span> days before the first event.</li>
+    <li>The Client will confirm the final guest count for each event at least <span class="ph">[7]</span> days before that event. Food is prepared for the confirmed count.</li>
+    <li>Veg and non-veg dishes are cooked, stored and served separately, with clearly labelled counters.</li>
+    <li>Changes to the menu or guest count after the dates above are made where possible and may change the price. Any change in price is agreed with the Client in writing first.</li>
+  </ol>
+</section>
+
+<section class="keep">
+  <h2><span class="no">2</span>Decor<span class="amt">$8,000</span></h2>
+  <ol class="terms">
+    <li>V5 will introduce the Client to our decor vendor and share photos of their previous work, so the Client can choose the look for each event.</li>
+    <li>V5 and the Client will finalise the decor design, colours and items for each event within the agreed budget of <b>$8,000</b>. The final decor plan is shared in writing before work starts.</li>
+    <li>If the Client's choices would take the decor over budget, V5 will tell the Client before any extra cost is incurred and revisit the budget together. No extra cost is charged without the Client's written approval.</li>
+    <li>V5 and the decor vendor will set up the decor before each event and take it down afterwards.</li>
+  </ol>
+</section>
+
+<section class="keep">
+  <h2><span class="no">3</span>Photography<span class="amt">$6,000</span></h2>
+  <ol class="terms">
+    <li>V5 will introduce the Client to our vendor photographer. The Client can review the photographer's portfolio and meet them before deciding.</li>
+    <li>Once the Client finalises the photographer, the coverage (events, hours, photo and video), the deliverables (number of edited photos, video, album) and the delivery timeline will be confirmed in writing as an annexure to this agreement.</li>
+    <li>V5 will share the event schedule with the photographer and coordinate them on each event day.</li>
+  </ol>
+</section>
+
+<section class="keep">
+  <h2><span class="no">4</span>Event item rentals<span class="amt">$1,000</span></h2>
+  <ol class="terms">
+    <li>V5 will provide rented event items such as tables, chairs, linens and other event essentials. The final list of items and quantities for each event is: <span class="ph">[LIST OF ITEMS OR "AS PER ANNEXURE"]</span>.</li>
+    <li>V5 will deliver, set up and collect all rented items.</li>
+    <li>Damage to rented items beyond normal use, or items lost during the events, will be charged to the Client at the vendor's cost.</li>
+  </ol>
+</section>
+
+<section class="keep">
+  <h2><span class="no">5</span>Garlands<span class="amt">$1,000</span></h2>
+  <ol class="terms">
+    <li>V5 will introduce the Client to our garland vendor and share samples of their work, so the Client can choose the flowers and styles.</li>
+    <li>The Client will finalise the type and number of garlands for each ceremony: <span class="ph">[GARLANDS PER EVENT]</span>.</li>
+    <li>Garlands are made fresh and delivered to the venue on the day of each event.</li>
+  </ol>
+</section>
+
+<section class="keep">
+  <h2><span class="no">6</span>Grandeur<span class="amt">$4,000</span></h2>
+  <ol class="terms">
+    <li>V5 will provide the following special touches to make the celebrations grand: <span class="ph">[DESCRIBE ITEMS, E.G. GRAND ENTRY, SPECIAL EFFECTS]</span>.</li>
+    <li>V5 will share the plan with the Client in writing and finalise it within the agreed budget of <b>$4,000</b>. Anything over budget is discussed and approved by the Client first.</li>
+  </ol>
+</section>
+
+<section class="keep">
+  <h2><span class="no">7</span>Accommodation<span class="amt">$12,000</span></h2>
+  <ol class="terms">
+    <li>V5 will show the Client rental spaces near the event venues, with the number of guests each can host, so the Client can choose where guests stay.</li>
+    <li>Accommodation is arranged for <span class="ph">[NO.]</span> guests from <span class="ph">[CHECK-IN DATE]</span> to <span class="ph">[CHECK-OUT DATE]</span>.</li>
+    <li>The Client will share the list of staying guests and the room plan at least <span class="ph">[14]</span> days before check-in.</li>
+    <li><b>Damages:</b> the Client is responsible for any damage to the rental spaces caused during the stay. Damage costs are charged to the Client as billed by the property.</li>
+    <li>Guests must follow each property's house rules, including check-in and check-out times.</li>
+  </ol>
+</section>
+
+<section class="keep">
+  <h2><span class="no">★</span>On the day of each event</h2>
+  <div class="callout"><b>No last-minute hassle.</b> Our team is on site from setup to close, so the family can enjoy the celebrations.</div>
+  <ol class="terms">
+    <li>V5 will be on site with our helpers from setup until the end of each event.</li>
+    <li>We coordinate all vendors (catering, decor, photography, garlands, rentals) and keep each event on schedule.</li>
+    <li>We take care of all event items: setup, arrangement during the event, and packing up afterwards.</li>
+    <li>The Client's single point of contact on each event day is <span class="ph">[V5 COORDINATOR NAME, PHONE]</span>.</li>
+  </ol>
+</section>
+
+<section class="keep">
+  <h2>General terms</h2>
+  <ol class="terms">
+    <li><b>Payment:</b> <span class="ph">[ADVANCE AMOUNT]</span> on signing this agreement, <span class="ph">[AMOUNT]</span> by <span class="ph">[DATE]</span>, and the balance by <span class="ph">[DATE]</span>.</li>
+    <li><b>Changes:</b> any change to the services, menus or budget is agreed in writing (email or WhatsApp is enough) by both sides.</li>
+    <li><b>Vendors:</b> V5 manages the vendors named in this agreement and is the Client's point of contact for them.</li>
+    <li><b>Cancellation:</b> <span class="ph">[CANCELLATION AND REFUND TERMS]</span>.</li>
+  </ol>
+</section>
+
+<section class="keep">
+  <h2>Agreement</h2>
+  <p>By signing below, both sides agree to the services, deliverables and price set out in this agreement.</p>
+  <div class="sign">
+    <div><div class="k">For V5 Event Management</div><div class="ln">Name</div><div class="ln">Signature</div><div class="ln">Date</div></div>
+    <div><div class="k">For the Client</div><div class="ln">Name</div><div class="ln">Signature</div><div class="ln">Date</div></div>
+  </div>
+</section>
+
+</body>
+</html>
