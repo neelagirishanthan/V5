@@ -7,3 +7,11 @@
   [headers.values]
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Send visitors on the old Netlify address to the real domain. Deploy previews use other
+# addresses, so they are not affected.
+[[redirects]]
+  from = "https://vfive.netlify.app/*"
+  to = "https://v5-events.com/:splat"
+  status = 301
+  force = true
