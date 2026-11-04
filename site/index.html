@@ -72,6 +72,20 @@
 .up-empty { color: #d9c9c4; font-size: 15px; }
 
 .weddings { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+.feature { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 36px; align-items: center; margin-bottom: 40px; }
+.video { position: relative; aspect-ratio: 16 / 9; border-radius: 22px; overflow: hidden; background: radial-gradient(circle at 30% 30%, #9b1c2c, #3d0b12); }
+.video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.play { position: absolute; inset: 0; width: 100%; border: 0; background: url("/assets/mark.svg") center 38% / 90px no-repeat, transparent; cursor: pointer; display: grid; place-items: center; align-content: end; gap: 14px; padding-bottom: 36px; color: #fff; }
+.play .disc { width: 76px; height: 76px; border-radius: 50%; background: var(--haldi); display: grid; place-items: center; transition: transform .2s ease; }
+.play:hover .disc { transform: scale(1.06); }
+.play svg { width: 30px; height: 30px; fill: var(--ink); margin-left: 4px; }
+.play .lbl { font: 700 15px/1 var(--label); }
+.feature-text h3 { font: 600 clamp(32px, 3.6vw, 44px)/1.05 var(--display); margin: 10px 0 10px; }
+.feature-text p { color: var(--muted); margin: 0 0 18px; }
+.days { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.days li { display: flex; gap: 16px; align-items: baseline; border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+.days b { font: 600 22px/1 var(--display); color: var(--kumkum); width: 74px; font-variant-numeric: lining-nums; }
+.days span { font: 600 15px/1.3 var(--label); }
 .wed { display: grid; gap: 12px; }
 .wed .ph { aspect-ratio: 4 / 5; }
 .wed h3 { margin: 0; font: 600 26px/1.1 var(--display); }
@@ -116,7 +130,7 @@
   .cer { scroll-snap-align: start; }
 }
 @media (max-width: 960px) {
-  .hero .wrap, .cal-band, .about { grid-template-columns: minmax(0, 1fr); }
+  .hero .wrap, .cal-band, .about, .feature { grid-template-columns: minmax(0, 1fr); }
   .hero-photos { height: 340px; }
   .planner form { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .planner .btn { grid-column: 1 / -1; }
@@ -263,6 +277,24 @@
   <section class="s wrap" id="weddings">
     <div class="s-head"><div><div class="eyebrow">Real weddings</div><h2>Celebrations we've planned</h2>
       <p>Stories from the families we've worked with.</p></div></div>
+    <div class="feature">
+      <div class="video" id="video">
+        <button type="button" class="play" id="play" aria-label="Play the wedding film">
+          <span class="disc" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7Z"/></svg></span>
+          <span class="lbl">Watch the wedding film · 11 min</span>
+        </button>
+      </div>
+      <div class="feature-text">
+        <div class="eyebrow">Featured wedding · August 2026</div>
+        <h3>Three days, three ceremonies</h3>
+        <p>A Telugu wedding we planned from start to finish, from the Haldi to the Pelli.</p>
+        <ol class="days">
+          <li><b>Aug 13</b><span>Haldi</span></li>
+          <li><b>Aug 14</b><span>Pelli Koduku function</span></li>
+          <li><b>Aug 15</b><span>Pelli (Wedding)</span></li>
+        </ol>
+      </div>
+    </div>
     <div class="weddings">
       <article class="wed"><div class="ph" role="img" aria-label="Photo coming soon: featured wedding"><span>Photo: featured wedding</span></div><h3 class="pending">[Couple] · [Month Year]</h3><p class="pending">[City] · [Ceremonies we planned]</p></article>
       <article class="wed"><div class="ph" role="img" aria-label="Photo coming soon: featured wedding"><span>Photo: featured wedding</span></div><h3 class="pending">[Couple] · [Month Year]</h3><p class="pending">[City] · [Ceremonies we planned]</p></article>
@@ -374,6 +406,17 @@
     box.innerHTML = '<div class="up-empty">Our calendar could not load. <a href="/calendar/" style="color:#f2c14e">Open it here</a>.</div>';
   }
 })();
+</script>
+<script>
+// Load the Google Drive player only when someone presses play.
+document.getElementById("play").addEventListener("click", () => {
+  const f = document.createElement("iframe");
+  f.src = "https://drive.google.com/file/d/1L2fjKta7ThRW0TLGe5hbADsQi9Obu1YQ/preview";
+  f.title = "Wedding film, August 2026";
+  f.allow = "autoplay; fullscreen";
+  f.allowFullscreen = true;
+  document.getElementById("video").replaceChildren(f);
+});
 </script>
 </body>
 </html>
