@@ -64,7 +64,7 @@
 .upcoming { display: grid; gap: 10px; }
 .up { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 16px; align-items: center; background: rgba(255,255,255,.06); border-radius: 16px; padding: 14px 16px; }
 .up .when { text-align: center; border-right: 1px solid rgba(255,255,255,.15); padding-right: 12px; }
-.up .when b { display: block; font: 600 30px/1 var(--display); color: #fff; }
+.up .when b { display: block; font: 800 26px/1 var(--label); color: #fff; }
 .up .when span { font: 800 11px/1 var(--label); letter-spacing: .12em; text-transform: uppercase; color: var(--haldi-text); }
 .up h3 { margin: 0 0 4px; font: 700 16px/1.3 var(--label); color: #fff; }
 .up .chips { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -74,6 +74,8 @@
 
 .weddings { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
 .ph.has-img::before { display: none; }
+.ph.illus .mark { position: absolute; top: 10px; left: 10px; margin: 0; font: 700 11px/1 var(--label); background: rgba(255,255,255,.9); color: var(--kumkum); padding: 6px 9px; border-radius: 999px; letter-spacing: .02em; }
+
 .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .moments { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: 220px; grid-auto-flow: dense; gap: 12px; }
 .moments figure { margin: 0; border-radius: var(--radius); overflow: hidden; }
@@ -121,7 +123,7 @@
 .member .ph span { display: none; }
 .member b { font: 700 13px/1.2 var(--label); }
 .facts { display: flex; gap: 32px; margin-top: 22px; flex-wrap: wrap; }
-.facts div b { display: block; font: 600 44px/1 var(--display); color: var(--kumkum); }
+.facts div b { display: block; font: 800 36px/1 var(--label); color: var(--kumkum); }
 .facts div span { font: 700 12px/1.3 var(--label); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
 
 .steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; counter-reset: st; }
@@ -236,13 +238,13 @@
       <a class="more" href="/intake/">Request a quote →</a>
     </div>
     <div class="tiles">
-      <a class="tile" href="/intake/"><div class="ph" role="img" aria-label="Photo coming soon: food"><span>Photo: food</span></div><h3>Food &amp; live counters</h3><p>Veg and non-veg menus, cooked and served separately, with dosa, chaat and more.</p></a>
+      <a class="tile" href="/intake/"><div class="ph has-img illus"><img src="/images/illustrations/food.svg" alt="Illustration: food counter with a brass handi, banana-leaf meal and dosa" loading="lazy"><span class="mark">Illustration · photo coming soon</span></div><h3>Food &amp; live counters</h3><p>Veg and non-veg menus, cooked and served separately, with dosa, chaat and more.</p></a>
       <a class="tile" href="/intake/"><div class="ph has-img"><img src="/images/mandap-decor.jpg" alt="Outdoor mandap framed by white drapes and flowers" loading="lazy" decoding="async"></div><h3>Decor</h3><p>Mandapam, stage, floral, lighting and backdrops, finalised within your budget.</p></a>
       <a class="tile" href="/intake/"><div class="ph has-img"><img src="/images/couple-mountains.jpg" alt="Couple photographed above a mountain lake" loading="lazy" decoding="async"></div><h3>Photography</h3><p>Photo and video coverage. Meet our photographer and review their work first.</p></a>
       <a class="tile" href="/intake/"><div class="ph has-img"><img src="/images/floral-canopy.jpg" alt="Groom under a canopy of hanging flower garlands" loading="lazy" decoding="async"></div><h3>Garlands</h3><p>Fresh flower garlands for every ceremony, made on the day.</p></a>
       <a class="tile" href="/intake/"><div class="ph has-img"><img src="/images/grand-procession.jpg" alt="Bride's family entrance procession under a raised canopy" loading="lazy" decoding="async"></div><h3>Grandeur</h3><p>Grand entrances and special touches for the big moments.</p></a>
       <a class="tile" href="/intake/"><div class="ph has-img"><img src="/images/welcome-decor.jpg" alt="Welcome area with signage, brass lamps and flowers" loading="lazy" decoding="async"></div><h3>Event item rentals</h3><p>Tables, chairs, linens and essentials, delivered, set up and collected.</p></a>
-      <a class="tile" href="/intake/"><div class="ph" role="img" aria-label="Photo coming soon: guest stay"><span>Photo: guest stay</span></div><h3>Guest accommodation</h3><p>Rental stays near your venues for family travelling in.</p></a>
+      <a class="tile" href="/intake/"><div class="ph has-img illus"><img src="/images/illustrations/guest-stay.svg" alt="Illustration: guest house among pine trees" loading="lazy"><span class="mark">Illustration · photo coming soon</span></div><h3>Guest accommodation</h3><p>Rental stays near your venues for family travelling in.</p></a>
       <a class="tile" href="/intake/"><div class="ph has-img"><img src="/images/wedding-day.jpg" alt="Groom and family on the wedding day" loading="lazy" decoding="async"></div><h3>On the day</h3><p>Our team is on site from setup to close. No last-minute hassle.</p></a>
     </div>
   </section>
@@ -266,12 +268,12 @@
     <div class="s-head"><div><div class="eyebrow">The ceremonies</div><h2>Six celebrations, one team</h2>
       <p>Choose the ceremonies you're celebrating. Each one gets its own guests, decor, menu, music and rituals.</p></div></div>
     <div class="rail">
-      <div class="cer"><div class="ph" role="img" aria-label="Photo coming soon: Haldi"><span>Photo</span></div><div class="n">01</div><h3>Haldi</h3><p>Turmeric for the bride and groom, with marigolds and family close by.</p></div>
+      <div class="cer"><div class="ph has-img illus"><img src="/images/illustrations/haldi.svg" alt="Illustration: brass bowl of turmeric with marigolds" loading="lazy"><span class="mark">Illustration</span></div><div class="n">01</div><h3>Haldi</h3><p>Turmeric for the bride and groom, with marigolds and family close by.</p></div>
       <div class="cer"><div class="ph has-img"><img src="/images/groom-portrait.jpg" alt="Groom in a cream sherwani and turban" loading="lazy" decoding="async"></div><div class="n">02</div><h3>Pelli Koduku &amp; Kooturu</h3><p>Making the groom and bride, with the priest and fresh flowers.</p></div>
-      <div class="cer"><div class="ph" role="img" aria-label="Photo coming soon: Sangeeth"><span>Photo</span></div><div class="n">03</div><h3>Sangeeth</h3><p>Music and dance: stage, lighting, DJ, bar and live counters.</p></div>
+      <div class="cer"><div class="ph has-img illus"><img src="/images/illustrations/sangeeth.svg" alt="Illustration: dhol drum with music notes" loading="lazy"><span class="mark">Illustration</span></div><div class="n">03</div><h3>Sangeeth</h3><p>Music and dance: stage, lighting, DJ, bar and live counters.</p></div>
       <div class="cer"><div class="ph has-img"><img src="/images/mehandi-bangles.jpg" alt="Hennaed hands with bangles holding a betel leaf" loading="lazy" decoding="async"></div><div class="n">04</div><h3>Mehandi &amp; Bangles</h3><p>Henna and the gaajulu ceremony, with seating and a photo backdrop.</p></div>
       <div class="cer"><div class="ph has-img"><img src="/images/bride-mandap.jpg" alt="Bride seated at the mandap" loading="lazy" decoding="async"></div><div class="n">05</div><h3>Pelli &amp; Reception</h3><p>The muhurtham at the mandapam, then the reception for everyone.</p></div>
-      <div class="cer"><div class="ph" role="img" aria-label="Photo coming soon: Vratham"><span>Photo</span></div><div class="n">06</div><h3>Vratham</h3><p>Satyanarayana Swamy Vratham, with the priest and a veg meal.</p></div>
+      <div class="cer"><div class="ph has-img illus"><img src="/images/illustrations/vratham.svg" alt="Illustration: kalash with mango leaves between two diyas" loading="lazy"><span class="mark">Illustration</span></div><div class="n">06</div><h3>Vratham</h3><p>Satyanarayana Swamy Vratham, with the priest and a veg meal.</p></div>
     </div>
   </section>
 
@@ -321,9 +323,9 @@
     </div>
     <p class="credit" style="margin:12px 0 40px">Moments from Prashanth &amp; Tejaswi's wedding · Photos and film by Soul &amp; Ties</p>
     <div class="weddings">
-      <article class="wed"><div class="ph" role="img" aria-label="Photo coming soon: featured wedding"><span>Photo: featured wedding</span></div><h3 class="pending">[Couple] · [Month Year]</h3><p class="pending">[City] · [Ceremonies we planned]</p></article>
-      <article class="wed"><div class="ph" role="img" aria-label="Photo coming soon: featured wedding"><span>Photo: featured wedding</span></div><h3 class="pending">[Couple] · [Month Year]</h3><p class="pending">[City] · [Ceremonies we planned]</p></article>
-      <article class="wed"><div class="ph" role="img" aria-label="Photo coming soon: featured wedding"><span>Photo: featured wedding</span></div><h3 class="pending">[Couple] · [Month Year]</h3><p class="pending">[City] · [Ceremonies we planned]</p></article>
+      <article class="wed"><div class="ph has-img illus"><img src="/images/illustrations/wedding-mandap.svg" alt="Illustration: decorated mandap" loading="lazy"><span class="mark">Illustration · photo coming soon</span></div><h3 class="pending">[Couple] · [Month Year]</h3><p class="pending">[City] · [Ceremonies we planned]</p></article>
+      <article class="wed"><div class="ph has-img illus"><img src="/images/illustrations/wedding-garlands.svg" alt="Illustration: two wedding garlands" loading="lazy"><span class="mark">Illustration · photo coming soon</span></div><h3 class="pending">[Couple] · [Month Year]</h3><p class="pending">[City] · [Ceremonies we planned]</p></article>
+      <article class="wed"><div class="ph has-img illus"><img src="/images/illustrations/wedding-talambralu.svg" alt="Illustration: plate of talambralu rice" loading="lazy"><span class="mark">Illustration · photo coming soon</span></div><h3 class="pending">[Couple] · [Month Year]</h3><p class="pending">[City] · [Ceremonies we planned]</p></article>
     </div>
   </section>
 
@@ -350,11 +352,11 @@
         </div>
       </div>
       <div class="team">
-        <div class="member"><div class="ph" role="img" aria-label="Photo coming soon: team member"><span>Photo</span></div><b class="pending">[Name]</b></div>
-        <div class="member"><div class="ph" role="img" aria-label="Photo coming soon: team member"><span>Photo</span></div><b class="pending">[Name]</b></div>
-        <div class="member"><div class="ph" role="img" aria-label="Photo coming soon: team member"><span>Photo</span></div><b class="pending">[Name]</b></div>
-        <div class="member"><div class="ph" role="img" aria-label="Photo coming soon: team member"><span>Photo</span></div><b class="pending">[Name]</b></div>
-        <div class="member"><div class="ph" role="img" aria-label="Photo coming soon: team member"><span>Photo</span></div><b class="pending">[Name]</b></div>
+        <div class="member"><div class="ph has-img illus"><img src="/images/illustrations/team-1.svg" alt="Illustration: team member, photo coming soon" loading="lazy"></div><b class="pending">[Name]</b></div>
+        <div class="member"><div class="ph has-img illus"><img src="/images/illustrations/team-2.svg" alt="Illustration: team member, photo coming soon" loading="lazy"></div><b class="pending">[Name]</b></div>
+        <div class="member"><div class="ph has-img illus"><img src="/images/illustrations/team-3.svg" alt="Illustration: team member, photo coming soon" loading="lazy"></div><b class="pending">[Name]</b></div>
+        <div class="member"><div class="ph has-img illus"><img src="/images/illustrations/team-4.svg" alt="Illustration: team member, photo coming soon" loading="lazy"></div><b class="pending">[Name]</b></div>
+        <div class="member"><div class="ph has-img illus"><img src="/images/illustrations/team-5.svg" alt="Illustration: team member, photo coming soon" loading="lazy"></div><b class="pending">[Name]</b></div>
       </div>
     </div>
   </section>
