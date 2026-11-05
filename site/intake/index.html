@@ -219,7 +219,7 @@ input:focus-visible, textarea:focus-visible, select:focus-visible, button:focus-
       <button class="btn ghost" type="button" id="copy">Copy summary</button>
       <span class="status" id="status" role="status"></span>
     </div>
-    <p class="hint" style="margin-top:10px">Your answers are kept as a draft in this browser until you submit.</p>
+    <p class="hint" style="margin-top:10px">Your answers are kept as a draft in this browser until you submit. Questions? Call or WhatsApp (425) 503-1212, or email <a href="mailto:v5eventhub@gmail.com" style="color:var(--kumkum)">v5eventhub@gmail.com</a>.</p>
     <p hidden><label>Leave this empty <input id="bot-field" tabindex="-1" autocomplete="off"></label></p>
     <textarea class="copybox" id="copybox" readonly hidden aria-label="Intake summary"></textarea>
   </form>
@@ -428,7 +428,7 @@ $("copy").addEventListener("click", async () => {
   const text = summary(refresh());
   const box = $("copybox");
   box.value = text;
-  try { await navigator.clipboard.writeText(text); box.hidden = true; setStatus("Summary copied. Paste it into WhatsApp or email.", "ok"); }
+  try { await navigator.clipboard.writeText(text); box.hidden = true; setStatus("Summary copied. Paste it into WhatsApp, or email it to v5eventhub@gmail.com.", "ok"); }
   catch (_) { box.hidden = false; box.focus(); box.select(); setStatus("Select the summary below and copy it.", ""); }
 });
 
@@ -460,7 +460,7 @@ form.addEventListener("submit", async (ev) => {
     try { localStorage.removeItem(DRAFT_KEY); } catch (_) {}
     location.href = "/thanks/";
   } catch (_) {
-    setStatus("Sending failed. Check your connection and try again, or use Copy summary and send it to us.", "err");
+    setStatus("Sending failed. Check your connection and try again, or use Copy summary and email it to v5eventhub@gmail.com.", "err");
     $("submit").disabled = false;
   }
 });
