@@ -2,6 +2,11 @@
 [build]
   publish = "site"
 
+# The thank-you email sent after an intake form submission (see netlify/functions).
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
 [[headers]]
   for = "/*"
   [headers.values]
