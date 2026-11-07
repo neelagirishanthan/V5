@@ -1,0 +1,12 @@
+{
+  "name": "v5-events-site",
+  "private": true,
+  "description": "V5 Events website and the function that emails customers after they submit the intake form.",
+  "scripts": {
+    "test:email": "node tools/test-intake-email.js"
+  },
+  "dependencies": {
+    "nodemailer": "6.9.16",
+    "pdf-lib": "1.17.1"
+  }
+}
