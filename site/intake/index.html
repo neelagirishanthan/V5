@@ -50,6 +50,7 @@
   --leaf: #7cc58a; --leaf-soft: #1c3020; --danger: #ff8a80; color-scheme: dark;
 }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 body { background: var(--paper); color: var(--ink); font: 16px/1.55 var(--body); }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
 .wrap { max-width: 860px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 64px; }
@@ -97,6 +98,9 @@ input:focus-visible, textarea:focus-visible, select:focus-visible, button:focus-
 .q { display: grid; gap: 8px; }
 .q-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; }
 
+.services .qlabel em { font-weight: 500; color: var(--muted); font-style: normal; margin-left: 6px; }
+.sec { border-left: 3px solid var(--haldi); padding-left: 14px; animation: open .18s ease-out; }
+@keyframes open { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
 .switch { display: inline-flex; align-items: center; gap: 8px; font: 600 13px/1 var(--label); color: var(--muted); }
 .switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
 .switch span { width: 46px; height: 26px; border-radius: 999px; background: var(--line); position: relative; transition: background .15s; flex: none; }
@@ -239,8 +243,12 @@ const EVENTS = [
   { id: "mehandi", name: "Mehandi & Bangles", note: "Henna and gaajulu ceremony", priest: false, dj: true },
   { id: "pelli", name: "Pelli & Reception", note: "Wedding muhurtham and reception", priest: true, dj: true },
   { id: "vratham", name: "Vratham", note: "Satyanarayana Swamy Vratham", priest: true, dj: false },
-  { id: "birthday", name: "Birthday party", note: "Kids' and family birthdays: themed decor, play area, cake table", priest: false, dj: true },
-  { id: "corporate", name: "Corporate event", note: "Team celebrations, festivals at work, launches and offsites", priest: false, dj: true }
+  { id: "birthday", name: "Birthday party", note: "Kids' and family birthdays: themed decor, play area, cake table", priest: false, dj: true, noPriest: true },
+  { id: "corporate", name: "Corporate event", note: "Team celebrations, festivals at work, launches and offsites", priest: false, dj: true, noPriest: true }
+];
+const SERVICES = [
+  { id: "decor", name: "Decor" }, { id: "food", name: "Food & catering" }, { id: "bar", name: "Bar / bartender" },
+  { id: "dj", name: "DJ" }, { id: "priest", name: "Priest (pantulu garu)" }, { id: "photo", name: "Photography" }
 ];
 const DECOR = ["Stage / mandapam", "Entrance arch", "Floral decor", "Garlands", "Lighting", "Seating & tables", "Photo booth", "Backdrop / theme", "Rangoli", "Balloon decor", "Kids' play area", "Cake table"];
 const COUNTERS = ["Dosa", "Chaat & pani puri", "Jalebi", "Pasta", "Tandoor / BBQ", "Biryani", "Ice cream & paan", "Juice / mocktails"];
@@ -274,22 +282,20 @@ $("events").innerHTML = EVENTS.map((e, n) => {
         <label class="field"><span>Date</span><input type="date" id="${e.id}-date" name="${p}.date"></label>
         <label class="field"><span>How many people</span><input type="number" min="0" inputmode="numeric" id="${e.id}-guests" name="${p}.guests" placeholder="e.g. 150"></label>
       </div>
-      <div class="q"><span class="qlabel">Decor to cover</span>${chips(`${p}.decor`, DECOR, `${e.id}-decor`)}
+      <div class="q services"><span class="qlabel">What do you need for this event? <em>Tick a service to see its options</em></span>
+        <div class="chips">${SERVICES.filter((sv) => !(sv.id === "priest" && e.noPriest)).map((sv) =>
+          `<label class="chip"><input type="checkbox" data-multi id="${e.id}-svc-${sv.id}" name="${p}.svc" value="${sv.id}"><span>${esc(sv.name)}</span></label>`).join("")}</div></div>
+      <div class="q sec" id="${e.id}-sec-decor"><span class="qlabel">Decor to cover</span>${chips(`${p}.decor`, DECOR, `${e.id}-decor`)}
         <input type="text" id="${e.id}-decornotes" name="${p}.decorNotes" placeholder="Colours, theme or reference photos"></div>
-      <div class="q"><span class="qlabel">Food preference</span>
-        ${seg(`${p}.food`, [["veg", '<i class="veg-dot"></i>Veg only'], ["nonveg", '<i class="nv-dot"></i>Non-veg only'], ["both", "Both"], ["none", "No food"]], `${e.id}-food`, "Food preference")}
+      <div class="q sec" id="${e.id}-sec-food"><span class="qlabel">Food preference</span>
+        ${seg(`${p}.food`, [["veg", '<i class="veg-dot"></i>Veg only'], ["nonveg", '<i class="nv-dot"></i>Non-veg only'], ["both", "Both"]], `${e.id}-food`, "Food preference")}
         <div class="q-row" id="${e.id}-split">
           <label class="field"><span><i class="veg-dot"></i>Veg guests</span><input type="number" min="0" inputmode="numeric" id="${e.id}-vegn" name="${p}.vegCount"></label>
           <label class="field"><span><i class="nv-dot"></i>Non-veg guests</span><input type="number" min="0" inputmode="numeric" id="${e.id}-nvn" name="${p}.nonvegCount"></label>
-        </div></div>
-      <div class="q"><span class="qlabel">Live counters</span>${chips(`${p}.counters`, COUNTERS, `${e.id}-ctr`)}</div>
-      <div class="q-row">
-        <div class="q"><span class="qlabel">Alcohol / bartender</span>${seg(`${p}.alcohol`, [["yes", "Yes"], ["no", "No"]], `${e.id}-alc`, "Alcohol")}
-          <div id="${e.id}-bar">${seg(`${p}.bar`, BAR.map((b) => [b, b]), `${e.id}-bar`, "Bar type")}</div></div>
-        <div class="q"><span class="qlabel">DJ needed</span>${seg(`${p}.dj`, [["yes", "Yes"], ["no", "No"]], `${e.id}-dj`, "DJ")}</div>
-        <div class="q"><span class="qlabel">Priest (pantulu garu)</span>${seg(`${p}.priest`, [["yes", "Yes"], ["no", "No"]], `${e.id}-pr`, "Priest")}</div>
-      </div>
-      <div class="q"><span class="qlabel">Photography coverage</span>${chips(`${p}.photo`, PHOTO, `${e.id}-ph`)}</div>
+        </div>
+        <span class="qlabel">Live counters <em>(optional)</em></span>${chips(`${p}.counters`, COUNTERS, `${e.id}-ctr`)}</div>
+      <div class="q sec" id="${e.id}-sec-bar"><span class="qlabel">Bar type</span>${seg(`${p}.bar`, BAR.map((b) => [b, b]), `${e.id}-bar`, "Bar type")}</div>
+      <div class="q sec" id="${e.id}-sec-photo"><span class="qlabel">Photography coverage</span>${chips(`${p}.photo`, PHOTO, `${e.id}-ph`)}</div>
     </div>
   </article>`;
 }).join("");
@@ -329,21 +335,37 @@ function fillForm(o) {
 // Sensible starting answers: DJ and priest default per ceremony.
 function defaults() {
   const ev = {};
-  for (const e of EVENTS) ev[e.id] = { on: false, dj: e.dj ? "yes" : "no", priest: e.priest ? "yes" : "no", alcohol: "no", food: "veg" };
+  for (const e of EVENTS) ev[e.id] = { on: false, svc: [], food: "veg" };
   return { ev, acc: { needed: "no" } };
+}
+
+function normalize(o) {
+  for (const e of EVENTS) {
+    const d = o.ev[e.id], svc = d.svc || [];
+    const has = (id) => svc.includes(id);
+    d.dj = has("dj") ? "yes" : "no";
+    d.priest = has("priest") ? "yes" : "no";
+    d.alcohol = has("bar") ? "yes" : "no";
+    if (!has("bar")) d.bar = "";
+    if (!has("decor")) { d.decor = []; d.decorNotes = ""; }
+    if (!has("food")) { d.food = ""; d.counters = []; d.vegCount = null; d.nonvegCount = null; }
+    if (!has("photo")) d.photo = [];
+  }
+  return o;
 }
 
 function chosen(o) { return EVENTS.filter((e) => o.ev?.[e.id]?.on); }
 
 function refresh() {
-  const o = readForm();
+  const raw = readForm();
   for (const e of EVENTS) {
-    const d = o.ev[e.id];
+    const d = raw.ev[e.id], svc = d.svc || [];
     $("card-" + e.id).classList.toggle("on", d.on);
     $("body-" + e.id).hidden = !d.on;
+    for (const id of ["decor", "food", "bar", "photo"]) $(`${e.id}-sec-${id}`).hidden = !svc.includes(id);
     $(e.id + "-split").hidden = d.food !== "both";
-    $(e.id + "-bar").hidden = d.alcohol !== "yes";
   }
+  const o = normalize(raw);
   $("acc-detail").hidden = o.acc.needed !== "yes";
   const evs = chosen(o);
   const counts = evs.map((e) => o.ev[e.id].guests || 0);
@@ -370,14 +392,14 @@ function summary(o) {
     const d = o.ev[e.id];
     L.push(`${i + 1}. ${e.name}${d.date ? " — " + d.date : ""}`);
     L.push(`   People: ${d.guests ?? "not given"}`);
-    L.push(`   Decor: ${d.decor?.length ? d.decor.join(", ") : "none chosen"}${d.decorNotes ? " (" + d.decorNotes + ")" : ""}`);
-    let food = FOOD[d.food] || "not given";
+    L.push(`   Decor: ${(d.svc || []).includes("decor") ? (d.decor?.length ? d.decor.join(", ") : "Yes, details to discuss") : "Not needed"}${d.decorNotes ? " (" + d.decorNotes + ")" : ""}`);
+    let food = d.food ? (FOOD[d.food] || "not given") : "Not needed";
     if (d.food === "both" && (d.vegCount != null || d.nonvegCount != null)) food += ` (veg ${d.vegCount ?? "?"}, non-veg ${d.nonvegCount ?? "?"})`;
     L.push(`   Food: ${food}`);
-    L.push(`   Live counters: ${d.counters?.length ? d.counters.join(", ") : "none"}`);
+    if (d.food) L.push(`   Live counters: ${d.counters?.length ? d.counters.join(", ") : "none"}`);
     L.push(`   Alcohol / bartender: ${d.alcohol === "yes" ? "Yes" + (d.bar ? " — " + d.bar : "") : "No"}`);
-    L.push(`   DJ: ${d.dj === "yes" ? "Yes" : "No"} · Priest: ${d.priest === "yes" ? "Yes" : "No"}`);
-    L.push(`   Photography: ${d.photo?.length ? d.photo.join(", ") : "not needed"}`);
+    L.push(e.noPriest ? `   DJ: ${d.dj === "yes" ? "Yes" : "No"}` : `   DJ: ${d.dj === "yes" ? "Yes" : "No"} · Priest: ${d.priest === "yes" ? "Yes" : "No"}`);
+    L.push(`   Photography: ${(d.svc || []).includes("photo") ? (d.photo?.length ? d.photo.join(", ") : "Yes, details to discuss") : "Not needed"}`);
   });
   if (!evs.length) L.push("(no events selected yet)");
   L.push("");
